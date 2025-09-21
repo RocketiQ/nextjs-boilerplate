@@ -24,3 +24,27 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* --- RocketiQ apply page responsive helpers --- */
+.careers-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: 1fr 1fr; /* desktop: two columns */
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .careers-grid {
+    grid-template-columns: 1fr; /* mobile: single column */
+  }
+}
+
+.stack-2 {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: 1fr 1fr; /* two side-by-side inputs */
+}
+@media (max-width: 600px) {
+  .stack-2 {
+    grid-template-columns: 1fr; /* stack on phones */
+  }
+}
