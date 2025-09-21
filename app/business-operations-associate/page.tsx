@@ -50,7 +50,7 @@ export default function BusinessOpsAssociateApply() {
 
   return (
     <main style={{ background: '#f7f7f8', minHeight: '100vh' }}>
-      <div style={page}>
+      <div className="apply-shell" style={page}>
         <div style={{ marginBottom: 16 }}>
           <small style={{ background:'#fee2e2', color:'#991b1b', padding:'4px 8px', borderRadius:999, fontWeight:600 }}>RocketiQ — Careers</small>
           <h1 style={{ fontSize: 28, margin: '12px 0 8px' }}>Business Operations Associate — Part-Time, Unpaid</h1>
