@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Turnstile from '../components/Turnstile'; // ← NEW: import the widget
 
 export default function BusinessOpsAssociateApply() {
   const [pending, setPending] = useState(false);
@@ -130,7 +131,18 @@ export default function BusinessOpsAssociateApply() {
                   <input type="checkbox" name="consent" required /> I consent to RocketiQ processing my data for recruiting.
                 </label>
 
-                <button type="submit" disabled={pending} style={{ background: pending ? '#ef4444aa' : '#ef4444', color:'#fff', border:0, borderRadius:10, padding:'10px 14px', fontWeight:600, cursor: pending ? 'not-allowed' : 'pointer' }}>
+                {/* Turnstile must be INSIDE the form so it injects the hidden token */}
+                <Turnstile theme="light" /> {/* ← NEW: the widget */}
+
+                <button
+                  type="submit"
+                  disabled={pending}
+                  style={{
+                    background: pending ? '#ef4444aa' : '#ef4444',
+                    color:'#fff', border:0, borderRadius:10, padding:'10px 14px',
+                    fontWeight:600, cursor: pending ? 'not-allowed' : 'pointer'
+                  }}
+                >
                   {pending ? 'Submitting…' : 'Submit Application'}
                 </button>
 
