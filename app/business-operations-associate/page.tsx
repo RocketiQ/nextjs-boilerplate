@@ -85,7 +85,7 @@ export default function BusinessOpsAssociateApply() {
               <li><strong>Reporting &amp; improvements:</strong> Weekly dashboard (hiring, content, web, events), flag risks, benchmark tools, and suggest small process fixes.</li>
             </ul>
 
-            <h2 style={h2Next}><strong>Requirements (strict)</strong></h2>
+            <h2 style={h2Next}><strong>Requirements</strong></h2>
             <ul>
               <li><strong>Education:</strong> bachelor’s graduate or master’s (pursuing/graduate) or PhD (pursuing/graduate).</li>
               <li><strong>Experience:</strong> 1+ years proven leadership/management in operations, program management, or product/people operations.</li>
@@ -97,7 +97,7 @@ export default function BusinessOpsAssociateApply() {
             </ul>
 
             <h2 style={h2Next}><strong>What You’ll Gain</strong></h2>
-            <ul>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
               <li>Core-team exposure with direct mentorship from the Founder and Ops Manager.</li>
               <li>Certificate of Appointment (unique ID) and performance-based Letter of Recommendation.</li>
               <li>Public credit on shipped pages/events and internal systems you help build.</li>
