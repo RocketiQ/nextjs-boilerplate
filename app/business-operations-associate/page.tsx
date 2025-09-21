@@ -313,8 +313,9 @@ export default function BusinessOpsAssociateApply() {
                 )}
 
                 {/* Consent */}
-                <label style={{ fontSize: 13, color: 'var(--muted)' }}>
-                  <input type="checkbox" name="consent" required /> I consent to RocketiQ processing my data for recruiting.
+                <label className="consent">
+                  <input type="checkbox" name="consent" required /> 
+                  I consent to RocketiQ processing my data for recruiting.
                 </label>
 
                 {/* Turnstile inside the form */}
