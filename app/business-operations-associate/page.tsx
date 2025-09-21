@@ -134,7 +134,6 @@ export default function BusinessOpsAssociateApply() {
               <li><strong>Education:</strong> bachelor’s graduate or master’s (pursuing/graduate) or PhD (pursuing/graduate).</li>
               <li><strong>Experience:</strong> 1+ years proven leadership/management in operations, program management, or product/people operations.</li>
               <li><strong>Execution:</strong> evidence of shipping on schedules across multiple stakeholders; comfort running meeting rhythms and driving follow-ups.</li>
-              <li><strong>Tools:</strong> strong Google Workspace; task trackers (Notion/Asana/Trello/Jira); Zoom/Meet; solid spreadsheet skills.</li>
               <li><strong>Communication:</strong> excellent written and verbal English; clear updates and professional stakeholder handling.</li>
               <li><strong>Process/Quality:</strong> SOP/checklist mindset, versioning/naming hygiene, attention to detail.</li>
               <li><strong>Availability:</strong> ~2–3 hours/day on weekdays with overlap to India and U.S. time zones; responsive on priority items.</li>
@@ -142,8 +141,8 @@ export default function BusinessOpsAssociateApply() {
 
             <h2 style={h2Next}><strong>What You’ll Gain</strong></h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
-              <li>Core-team exposure with direct mentorship from the Founder and Ops Manager.</li>
               <li>Certificate of Appointment (unique ID) and performance-based Letter of Recommendation.</li>
+              <li>Core-team exposure with direct mentorship from the Founder and Ops Manager.</li>
               <li>Public credit on shipped pages/events and internal systems you help build.</li>
               <li>Priority consideration for future paid roles/contract work.</li>
             </ul>
@@ -153,7 +152,7 @@ export default function BusinessOpsAssociateApply() {
               <li><strong>Duration:</strong> minimum 1 year; extensions possible based on performance</li>
               <li><strong>Time:</strong> ~2–3 hours/day (weekday cadence)</li>
               <li><strong>Location:</strong> Remote (India-first; global participation welcome)</li>
-              <li><strong>Compensation:</strong> Unpaid role (voluntary appointment)</li>
+              <li><strong>Compensation:</strong> Unpaid role</li>
             </ul>
 
             <h2 style={h2Next}><strong>Application Requirements</strong></h2>
