@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* ---------- Theme tokens ---------- */
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -19,13 +20,37 @@
   }
 }
 
+/* ---------- Base / reset (prevents mobile overflow) ---------- */
+html, body { margin: 0; padding: 0; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* --- RocketiQ apply page responsive helpers --- */
+/* Keep media and embeds within the viewport */
+img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto; }
+
+/* Form controls inherit fonts */
+input, button, textarea, select { font: inherit; }
+
+/* Monospace fallback */
+code, pre { font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace); }
+
+/* Guard against tiny horizontal scroll caused by wide children */
+main { overflow-x: hidden; }
+
+/* Common mobile overflow culprits */
+fieldset { min-width: 0; }
+input[type="file"] { width: 100%; }
+
+/* ---------- RocketiQ Apply: responsive helpers ---------- */
 .careers-grid {
   display: grid;
   gap: 16px;
@@ -33,9 +58,7 @@ body {
   align-items: start;
 }
 @media (max-width: 900px) {
-  .careers-grid {
-    grid-template-columns: 1fr; /* mobile: single column */
-  }
+  .careers-grid { grid-template-columns: 1fr; } /* mobile: single column */
 }
 
 .stack-2 {
@@ -44,7 +67,5 @@ body {
   grid-template-columns: 1fr 1fr; /* two side-by-side inputs */
 }
 @media (max-width: 600px) {
-  .stack-2 {
-    grid-template-columns: 1fr; /* stack on phones */
-  }
+  .stack-2 { grid-template-columns: 1fr; } /* stack on phones */
 }
