@@ -1,5 +1,7 @@
 'use client';
+
 import { useState } from 'react';
+import Image from 'next/image';
 import Turnstile from '../components/Turnstile';
 
 export default function BusinessOpsAssociateApply() {
@@ -40,25 +42,35 @@ export default function BusinessOpsAssociateApply() {
     setPending(false);
   }
 
-  const card: React.CSSProperties = { border: '1px solid #e5e7eb', borderRadius: 12, padding: 16, background: '#fff' };
-  const label: React.CSSProperties = { fontSize: 14, fontWeight: 600, marginBottom: 6 };
-  const input: React.CSSProperties = { padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 10, fontSize: 14, width: '100%' };
-
-  // Headings: first section vs. subsequent sections (adds top margin for spacing)
+  // Typography helpers (spacing is exactly as in your current page)
   const h2First: React.CSSProperties = { marginTop: 0, marginBottom: 8, fontWeight: 800, fontSize: 20 };
   const h2Next:  React.CSSProperties = { marginTop: 20, marginBottom: 8, fontWeight: 800, fontSize: 20 };
+  const label:   React.CSSProperties = { fontSize: 14, fontWeight: 700, marginBottom: 6, color: 'var(--muted)' };
 
   return (
-    <main style={{ background: '#f7f7f8', minHeight: '100vh' }}>
+    <main>
+      {/* Logo header */}
+      <header className="apply-shell" style={{ paddingTop: 12, paddingBottom: 0 }}>
+        <Image
+          src="/rocketiq-white.png"   // put the file at /public/rocketiq-white.png
+          alt="RocketiQ"
+          width={280}
+          height={40}
+          priority
+          style={{ height: 'auto' }}
+        />
+      </header>
+
       <div className="apply-shell">
+        {/* Badge + Title */}
         <div style={{ marginBottom: 16 }}>
-          <small style={{ background:'#fee2e2', color:'#991b1b', padding:'4px 8px', borderRadius:999, fontWeight:600 }}>RocketiQ — Careers</small>
+          <small className="pill">RocketiQ — Careers</small>
           <h1 style={{ fontSize: 28, margin: '12px 0 0' }}>Business Operations Associate</h1>
         </div>
 
         <div className="careers-grid">
           {/* Job post (content) */}
-          <section style={card}>
+          <section className="card-dk">
             <h2 style={h2First}><strong>About RocketiQ</strong></h2>
             <p>
               RocketiQ is a research-native aerospace edtech startup founded by a U.S.-based rocket propulsion scientist.
@@ -131,25 +143,25 @@ export default function BusinessOpsAssociateApply() {
           </section>
 
           {/* Apply form */}
-          <section style={card}>
+          <section className="card-dk">
             <h2 style={h2First}><strong>Apply Now</strong></h2>
             <form onSubmit={onSubmit}>
               <input type="hidden" name="job_slug" value="business-operations-associate" />
               <div style={{ display:'grid', gap: 12 }}>
-                <div><div style={label}>Full name</div><input name="name" required placeholder="Jane Doe" style={input} /></div>
-                <div><div style={label}>Age</div><input name="age" type="number" min={0} placeholder="22" style={input} /></div>
-                <div><div style={label}>Email</div><input name="email" type="email" required placeholder="jane@domain.com" style={input} /></div>
+                <div><div style={label}>Full name</div><input name="name" required placeholder="Jane Doe" /></div>
+                <div><div style={label}>Age</div><input name="age" type="number" min={0} placeholder="22" /></div>
+                <div><div style={label}>Email</div><input name="email" type="email" required placeholder="jane@domain.com" /></div>
 
                 <div className="stack-2">
-                  <div><div style={label}>Country</div><input name="country" placeholder="India" style={input} /></div>
-                  <div><div style={label}>State</div><input name="state" placeholder="Karnataka" style={input} /></div>
+                  <div><div style={label}>Country</div><input name="country" placeholder="India" /></div>
+                  <div><div style={label}>State</div><input name="state" placeholder="Karnataka" /></div>
                 </div>
 
-                <div><div style={label}>WhatsApp (with country code)</div><input name="whatsapp" placeholder="+919876543210" style={input} /></div>
+                <div><div style={label}>WhatsApp (with country code)</div><input name="whatsapp" placeholder="+919876543210" /></div>
 
                 <div>
                   <div style={label}>Qualification</div>
-                  <select name="qualification" style={input} defaultValue="">
+                  <select name="qualification" defaultValue="">
                     <option value="" disabled>Choose one</option>
                     <option>Bachelors pursuing</option>
                     <option>Bachelors graduate</option>
@@ -160,56 +172,58 @@ export default function BusinessOpsAssociateApply() {
                   </select>
                 </div>
 
-                <div><div style={label}>Degree name</div><input name="degree_name" placeholder="B.Tech Mechanical" style={input} /></div>
+                <div><div style={label}>Degree name</div><input name="degree_name" placeholder="B.Tech Mechanical" /></div>
+                <div><div style={label}>Portfolio / GitHub (optional)</div><input name="portfolio" type="url" placeholder="https://github.com/username" /></div>
 
-                <div><div style={label}>Portfolio / GitHub (optional)</div><input name="portfolio" type="url" placeholder="https://github.com/username" style={input} /></div>
-
-                <fieldset style={{ border:'1px dashed #e5e7eb', borderRadius:12, padding:12 }}>
+                <fieldset style={{ border:'1px dashed var(--panel-border)', borderRadius:12, padding:12 }}>
                   <legend style={{ fontSize:13, fontWeight:700 }}>Relevant experience (up to 3)</legend>
                   {[1,2,3].map(i => (
                     <div key={i} className="stack-2" style={{ marginBottom: 10 }}>
-                      <input name={`exp${i}_role`} placeholder={`Experience ${i}: Role`} style={input} />
-                      <input name={`exp${i}_org`} placeholder="Organization" style={input} />
-                      <input name={`exp${i}_dates`} placeholder="Dates (e.g., 2023–2024)" style={input} />
-                      <input name={`exp${i}_summary`} placeholder="1–2 line summary" style={input} />
+                      <input name={`exp${i}_role`} placeholder={`Experience ${i}: Role`} />
+                      <input name={`exp${i}_org`} placeholder="Organization" />
+                      <input name={`exp${i}_dates`} placeholder="Dates (e.g., 2023–2024)" />
+                      <input name={`exp${i}_summary`} placeholder="1–2 line summary" />
                     </div>
                   ))}
                 </fieldset>
 
-                <div><div style={label}>Why RocketiQ for this role? (optional)</div><textarea name="q1" rows={4} style={{ ...input, resize:'vertical' }} /></div>
-                <div><div style={label}>Anything else we should know? (optional)</div><textarea name="q2" rows={3} style={{ ...input, resize:'vertical' }} /></div>
+                <div><div style={label}>Why RocketiQ for this role? (optional)</div><textarea name="q1" rows={4} style={{ resize:'vertical' }} /></div>
+                <div><div style={label}>Anything else we should know? (optional)</div><textarea name="q2" rows={3} style={{ resize:'vertical' }} /></div>
 
                 <div>
                   <div style={label}>Resume (PDF, ≤ 2 MB)</div>
                   <input type="file" name="resume" accept="application/pdf" required />
-                  {fileErr && <div style={{ color:'#b91c1c', fontSize:12, marginTop:6 }}>{fileErr}</div>}
+                  {fileErr && <div style={{ color:'#ff9898', fontSize:12, marginTop:6 }}>{fileErr}</div>}
                 </div>
 
-                <label style={{ fontSize:13, color:'#374151' }}>
+                <label style={{ fontSize:13, color:'var(--muted)' }}>
                   <input type="checkbox" name="consent" required /> I consent to RocketiQ processing my data for recruiting.
                 </label>
 
+                {/* Turnstile inside the form */}
                 <Turnstile theme="light" />
 
                 <button
                   type="submit"
+                  className={`btn-primary ${pending ? 'btn-disabled' : ''}`}
                   disabled={pending}
-                  style={{
-                    background: pending ? '#ef4444aa' : '#ef4444',
-                    color:'#fff', border:0, borderRadius:10, padding:'10px 14px',
-                    fontWeight:600, cursor: pending ? 'not-allowed' : 'pointer'
-                  }}
                 >
                   {pending ? 'Submitting…' : 'Submit Application'}
                 </button>
 
-                {msg && <div style={{ fontSize:14, color: msg.startsWith('Failed') ? '#b91c1c' : '#065f46' }}>{msg}</div>}
+                {msg && (
+                  <div style={{ fontSize:14, color: msg.startsWith('Failed') ? '#ff9898' : '#7de5b3' }}>
+                    {msg}
+                  </div>
+                )}
               </div>
             </form>
           </section>
         </div>
 
-        <p style={{ textAlign:'center', color:'#6b7280', fontSize:12, marginTop:20 }}>© {new Date().getFullYear()} RocketiQ</p>
+        <p style={{ textAlign:'center', color:'#9aa4b2', fontSize:12, marginTop:20 }}>
+          © {new Date().getFullYear()} RocketiQ
+        </p>
       </div>
     </main>
   );
