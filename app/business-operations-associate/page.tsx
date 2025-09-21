@@ -73,7 +73,7 @@ export default function BusinessOpsAssociateApply() {
             </p>
 
             <h2 style={h2Next}><strong>Key Responsibilities</strong></h2>
-            <ul>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
               <li><strong>Founder support:</strong> Turn Founder’s notes into tasks; keep a daily brief and decision/action log; end-of-day update.</li>
               <li><strong>Calendar &amp; comms:</strong> Manage IST/US scheduling; prep agendas/pre-reads; draft follow-ups for approval; coordinate stakeholders.</li>
               <li><strong>Meeting ops:</strong> Run standups when delegated; capture minutes; assign owners/dates; chase blockers; keep the task board current.</li>
