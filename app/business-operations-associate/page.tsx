@@ -27,6 +27,14 @@ export default function BusinessOpsAssociateApply() {
     const res = await fetch('/api/apply', { method: 'POST', body: fd });
     if (res.ok) {
       setMsg('Application submitted. Thank you!');
+
+      // 🔹 GA4 event: log a successful application (no PII)
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'application_submitted', {
+          job_slug: 'business-operations-associate',
+        });
+      }
+
       (e.currentTarget as HTMLFormElement).reset();
     } else {
       const j = await res.json().catch(() => null);
@@ -132,7 +140,7 @@ export default function BusinessOpsAssociateApply() {
                 </label>
 
                 {/* Turnstile must be INSIDE the form so it injects the hidden token */}
-                <Turnstile theme="light" /> {/* ← NEW: the widget */}
+                <Turnstile theme="light" /> {/* ← the widget */}
 
                 <button
                   type="submit"
