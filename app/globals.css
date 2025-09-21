@@ -13,18 +13,17 @@
 @theme inline {
   --color-background: var(--bg);
   --color-foreground: var(--text);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-/* base / reset */
+/* ---------- Base / reset ---------- */
 html, body { margin: 0; padding: 0; }
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: var(--font-geist-sans, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
+  /* Times New Roman for all body copy */
+  font-family: "Times New Roman", Times, serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   line-height: 1.6;
@@ -32,33 +31,52 @@ body {
 
 img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto; }
 input, button, textarea, select { font: inherit; }
-code, pre { font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace); }
+code, pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
 main { overflow-x: hidden; }
 fieldset { min-width: 0; }
 input[type="file"] { width: 100%; }
 
-/* Headings use gold accent */
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Headings ---------- */
+h1 { margin: 0; }
 h2, h3 { color: var(--accent); margin: 20px 0 8px; }
 
-/* Little helpers used on the page */
-.apply-shell { max-width: 980px; margin: 0 auto; padding: 24px; }
+/* ---------- Layout wrappers ---------- */
 
-.card-dk {
-  background: var(--panel);
-  border: 1px solid var(--panel-border);
-  border-radius: 12px;
-  padding: 16px;
+/* Centered logo row at the very top */
+.logo-bar{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0 8px;
+}
+.logo-bar img{ height: 48px; width: auto; }
+
+/* Main page container — widened on desktop */
+.apply-shell {
+  max-width: 1200px;      /* wider desktop canvas */
+  margin: 0 auto;
+  padding: 24px;
 }
 
-/* responsive grid used on the page */
+/* Two-column grid: content wider than form on desktop */
 .careers-grid {
   display: grid;
-  gap: 16px;
-  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  grid-template-columns: 1.25fr 1fr;  /* content column ~25% wider */
   align-items: start;
 }
-@media (max-width: 900px) { .careers-grid { grid-template-columns: 1fr; } }
 
+/* Collapse to single column on mobile */
+@media (max-width: 900px) {
+  .careers-grid { grid-template-columns: 1fr; }
+}
+
+/* Two inputs side-by-side, collapse on phones */
 .stack-2 {
   display: grid;
   gap: 12px;
@@ -66,7 +84,15 @@ h2, h3 { color: var(--accent); margin: 20px 0 8px; }
 }
 @media (max-width: 600px) { .stack-2 { grid-template-columns: 1fr; } }
 
-/* dark inputs */
+/* ---------- Cards ---------- */
+.card-dk {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+/* ---------- Form controls (dark) ---------- */
 input, select, textarea {
   background: #0d1530;
   border: 1px solid #243354;
@@ -78,7 +104,14 @@ input, select, textarea {
 ::placeholder { color: #9aa4b2; }
 input[type="checkbox"] { accent-color: var(--accent); }
 
-/* pill + button */
+/* Focus ring */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(245, 181, 36, 0.25);
+}
+
+/* ---------- Badges & Buttons ---------- */
 .pill {
   display: inline-block;
   background: var(--accent);
