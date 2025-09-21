@@ -42,20 +42,20 @@ export default function BusinessOpsAssociateApply() {
     setPending(false);
   }
 
-  // Typography helpers (spacing is exactly as in your current page)
+  // Typography helpers (spacing preserved)
   const h2First: React.CSSProperties = { marginTop: 0, marginBottom: 8, fontWeight: 800, fontSize: 20 };
   const h2Next:  React.CSSProperties = { marginTop: 20, marginBottom: 8, fontWeight: 800, fontSize: 20 };
   const label:   React.CSSProperties = { fontSize: 14, fontWeight: 700, marginBottom: 6, color: 'var(--muted)' };
 
   return (
     <main>
-      {/* Logo header */}
-      <header className="apply-shell" style={{ paddingTop: 12, paddingBottom: 0 }}>
+      {/* Centered logo (full-width header) */}
+      <header className="logo-bar">
         <Image
-          src="/rocketiq-white.png"   // put the file at /public/rocketiq-white.png
+          src="/rocketiq-white.png"   // ensure this file exists in /public
           alt="RocketiQ"
-          width={280}
-          height={40}
+          width={320}
+          height={44}
           priority
           style={{ height: 'auto' }}
         />
