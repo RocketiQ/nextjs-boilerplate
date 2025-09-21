@@ -52,13 +52,13 @@ h2, h3 { color: var(--accent); margin: 20px 0 8px; }
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 16px 0 8px;
+  padding: 18px 0 8px;
 }
 .logo-bar img{ height: 48px; width: auto; }
 
 /* Main page container — widened on desktop */
 .apply-shell {
-  max-width: 1200px;                 /* wider desktop canvas */
+  max-width: 1400px;                 /* wider desktop canvas */
   margin: 0 auto;
   padding-block: 24px;
   padding-inline: clamp(16px, 4vw, 24px); /* responsive side padding */
