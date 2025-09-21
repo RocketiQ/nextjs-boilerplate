@@ -107,10 +107,9 @@ export default function BusinessOpsAssociateApply() {
             <h2 style={h2Next}><strong>Role Logistics</strong></h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
               <li><strong>Duration:</strong> minimum 1 year; extensions possible based on performance</li>
-              <li><strong>Notice period:</strong> 3 months if you choose to leave</li>
-              <li><strong>Time:</strong> ~2–3 hours/day (weekday cadence), flexible scheduling with overlap</li>
+              <li><strong>Time:</strong> ~2–3 hours/day (weekday cadence)</li>
               <li><strong>Location:</strong> Remote (India-first; global participation welcome)</li>
-              <li><strong>Compensation:</strong> Unpaid role (voluntary appointment); no salary or benefits</li>
+              <li><strong>Compensation:</strong> Unpaid role (voluntary appointment)</li>
             </ul>
 
             <h2 style={h2Next}><strong>Application Requirements</strong></h2>
