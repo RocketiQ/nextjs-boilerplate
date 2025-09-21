@@ -43,8 +43,10 @@ export default function BusinessOpsAssociateApply() {
   const card: React.CSSProperties = { border: '1px solid #e5e7eb', borderRadius: 12, padding: 16, background: '#fff' };
   const label: React.CSSProperties = { fontSize: 14, fontWeight: 600, marginBottom: 6 };
   const input: React.CSSProperties = { padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 10, fontSize: 14, width: '100%' };
-  const h2: React.CSSProperties = { marginTop: 0, marginBottom: 8, fontWeight: 800, fontSize: 20 };
-  const h3: React.CSSProperties = { marginTop: 16, marginBottom: 8, fontWeight: 700, fontSize: 16 };
+
+  // Headings: first section vs. subsequent sections (adds top margin for spacing)
+  const h2First: React.CSSProperties = { marginTop: 0, marginBottom: 8, fontWeight: 800, fontSize: 20 };
+  const h2Next:  React.CSSProperties = { marginTop: 20, marginBottom: 8, fontWeight: 800, fontSize: 20 };
 
   return (
     <main style={{ background: '#f7f7f8', minHeight: '100vh' }}>
@@ -57,20 +59,20 @@ export default function BusinessOpsAssociateApply() {
         <div className="careers-grid">
           {/* Job post (content) */}
           <section style={card}>
-            <h2 style={h2}><strong>About RocketiQ</strong></h2>
+            <h2 style={h2First}><strong>About RocketiQ</strong></h2>
             <p>
               RocketiQ is a research-native aerospace edtech startup founded by a U.S.-based rocket propulsion scientist.
               We build simulation-driven workshops, open-source research projects, and educational outreach programs in aerospace and space sciences.
               Our mission is to bridge the gap between ambitious learners in India and global research standards in space, propulsion, and astrophysics.
             </p>
 
-            <h2 style={h2}><strong>About the Role</strong></h2>
+            <h2 style={h2Next}><strong>About the Role</strong></h2>
             <p>
               Support day-to-day operations across Creative, Web, Hiring/HR Ops, Events, and Internal Systems. This is a core-team, non-executive role reporting into the Founder and Business Operations Manager.
               You’ll help run the weekly rhythm, keep trackers clean, prep documents, and drive follow-ups to done.
             </p>
 
-            <h2 style={h2}><strong>Key Responsibilities</strong></h2>
+            <h2 style={h2Next}><strong>Key Responsibilities</strong></h2>
             <ul>
               <li><strong>Founder support:</strong> Turn Founder’s notes into tasks; keep a daily brief and decision/action log; end-of-day update.</li>
               <li><strong>Calendar &amp; comms:</strong> Manage IST/US scheduling; prep agendas/pre-reads; draft follow-ups for approval; coordinate stakeholders.</li>
@@ -83,7 +85,7 @@ export default function BusinessOpsAssociateApply() {
               <li><strong>Reporting &amp; improvements:</strong> Weekly dashboard (hiring, content, web, events), flag risks, benchmark tools, and suggest small process fixes.</li>
             </ul>
 
-            <h2 style={h2}><strong>Requirements (strict)</strong></h2>
+            <h2 style={h2Next}><strong>Requirements (strict)</strong></h2>
             <ul>
               <li><strong>Education:</strong> bachelor’s graduate or master’s (pursuing/graduate) or PhD (pursuing/graduate).</li>
               <li><strong>Experience:</strong> 1+ years proven leadership/management in operations, program management, or product/people operations.</li>
@@ -94,7 +96,7 @@ export default function BusinessOpsAssociateApply() {
               <li><strong>Availability:</strong> ~2–3 hours/day on weekdays with overlap to India and U.S. time zones; responsive on priority items.</li>
             </ul>
 
-            <h2 style={h2}><strong>What You’ll Gain</strong></h2>
+            <h2 style={h2Next}><strong>What You’ll Gain</strong></h2>
             <ul>
               <li>Core-team exposure with direct mentorship from the Founder and Ops Manager.</li>
               <li>Certificate of Appointment (unique ID) and performance-based Letter of Recommendation.</li>
@@ -102,7 +104,7 @@ export default function BusinessOpsAssociateApply() {
               <li>Priority consideration for future paid roles/contract work.</li>
             </ul>
 
-            <h2 style={h2}><strong>Duration / Time / Location / Compensation</strong></h2>
+            <h2 style={h2Next}><strong>Role Logistics</strong></h2>
             <ul>
               <li><strong>Duration:</strong> minimum 1 year; extensions possible based on performance</li>
               <li><strong>Notice period:</strong> 3 months if you choose to leave</li>
@@ -111,7 +113,7 @@ export default function BusinessOpsAssociateApply() {
               <li><strong>Compensation:</strong> Unpaid role (voluntary appointment); no salary or benefits</li>
             </ul>
 
-            <h2 style={h2}><strong>Application Requirements</strong></h2>
+            <h2 style={h2Next}><strong>Application Requirements</strong></h2>
             <ul>
               <li><strong>Curriculum Vitae:</strong> Your most recently updated C.V.</li>
               <li><strong>Cover Letter:</strong> Briefly explain fit and motivation for this role.</li>
@@ -121,20 +123,19 @@ export default function BusinessOpsAssociateApply() {
               </li>
             </ul>
 
-            <h2 style={h2}><strong>Selection Process</strong></h2>
+            <h2 style={h2Next}><strong>Selection Process</strong></h2>
             <p>Screening → interview → Selection → 30-day trial/pilot month → confirmation.</p>
 
             <p style={{ marginTop: 16 }}>
-              For questions reach out to us at <a href="mailto:contact@therocketiq.com">contact@therrocketiq.com</a>
+              For questions reach out to us at <a href="mailto:contact@therocketiq.com">contact@therocketiq.com</a>
             </p>
           </section>
 
           {/* Apply form */}
           <section style={card}>
-            <h2 style={h2}><strong>Apply Now</strong></h2>
+            <h2 style={h2First}><strong>Apply Now</strong></h2>
             <form onSubmit={onSubmit}>
               <input type="hidden" name="job_slug" value="business-operations-associate" />
-
               <div style={{ display:'grid', gap: 12 }}>
                 <div><div style={label}>Full name</div><input name="name" required placeholder="Jane Doe" style={input} /></div>
                 <div><div style={label}>Age</div><input name="age" type="number" min={0} placeholder="22" style={input} /></div>
