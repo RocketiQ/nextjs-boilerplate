@@ -296,19 +296,16 @@ export default function BusinessOpsAssociateApply() {
                 <div>
                   <div style={label}>Résumé / CV (PDF, under 2 MB)</div>
                   <input type="file" name="resume" accept="application/pdf" required />
-                  <small style={{ color: '#9aa4b2' }}>Choose file — shows “No file chosen” until selected.</small>
                 </div>
 
                 <div>
                   <div style={label}>Cover Letter (PDF, under 2 MB)</div>
                   <input type="file" name="cover_letter" accept="application/pdf" required />
-                  <small style={{ color: '#9aa4b2' }}>Choose file — shows “No file chosen” until selected.</small>
                 </div>
 
                 <div>
                   <div style={label}>1-Page Project Summary (PDF, under 2 MB)</div>
                   <input type="file" name="project_summary" accept="application/pdf" required />
-                  <small style={{ color: '#9aa4b2' }}>Choose file — shows “No file chosen” until selected.</small>
                 </div>
 
                 {fileErr && (
