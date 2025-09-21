@@ -166,9 +166,7 @@ export default function BusinessOpsAssociateApply() {
             </ul>
 
             <h2 style={h2Next}><strong>Application Deadline</strong></h2>
-            <p>
-              Applications will be reviewed immediately upon receipt. The position is open until filled with an anticipated start date of October 1, 2025.</li>
-            </p>
+            <p>Applications will be reviewed immediately upon receipt. The position is open until filled with an anticipated start date of October 1, 2025.</p>
 
             <h2 style={h2Next}><strong>Selection Process</strong></h2>
             <p>Screening → interview → Selection → 30-day trial/pilot month → confirmation.</p>
