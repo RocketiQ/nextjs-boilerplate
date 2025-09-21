@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import Turnstile from '../components/Turnstile'; // ← NEW: import the widget
+import Turnstile from '../components/Turnstile';
 
 export default function BusinessOpsAssociateApply() {
   const [pending, setPending] = useState(false);
@@ -10,7 +10,7 @@ export default function BusinessOpsAssociateApply() {
   function validateFile(f: File) {
     const isPdf = f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf');
     if (!isPdf) return 'Please upload a PDF file.';
-    const maxBytes = 2 * 1024 * 1024; // 2 MB cap to match Storage rule
+    const maxBytes = 2 * 1024 * 1024;
     if (f.size > maxBytes) return 'PDF must be ≤ 2 MB.';
     return null;
   }
@@ -27,14 +27,12 @@ export default function BusinessOpsAssociateApply() {
     const res = await fetch('/api/apply', { method: 'POST', body: fd });
     if (res.ok) {
       setMsg('Application submitted. Thank you!');
-
-      // 🔹 GA4 event: log a successful application (no PII)
+      // GA4 event (no PII)
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'application_submitted', {
           job_slug: 'business-operations-associate',
         });
       }
-
       (e.currentTarget as HTMLFormElement).reset();
     } else {
       const j = await res.json().catch(() => null);
@@ -43,14 +41,14 @@ export default function BusinessOpsAssociateApply() {
     setPending(false);
   }
 
-  const page: React.CSSProperties = { maxWidth: 980, margin: '0 auto', padding: 24, fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, Arial' };
   const card: React.CSSProperties = { border: '1px solid #e5e7eb', borderRadius: 12, padding: 16, background: '#fff' };
   const label: React.CSSProperties = { fontSize: 14, fontWeight: 600, marginBottom: 6 };
   const input: React.CSSProperties = { padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 10, fontSize: 14, width: '100%' };
 
   return (
     <main style={{ background: '#f7f7f8', minHeight: '100vh' }}>
-      <div className="apply-shell" style={page}>
+      {/* rely on .apply-shell from globals.css (no inline maxWidth/font here) */}
+      <div className="apply-shell">
         <div style={{ marginBottom: 16 }}>
           <small style={{ background:'#fee2e2', color:'#991b1b', padding:'4px 8px', borderRadius:999, fontWeight:600 }}>RocketiQ — Careers</small>
           <h1 style={{ fontSize: 28, margin: '12px 0 8px' }}>Business Operations Associate — Part-Time, Unpaid</h1>
@@ -80,7 +78,6 @@ export default function BusinessOpsAssociateApply() {
           <section style={card}>
             <h2 style={{ marginTop:0 }}>Apply Now</h2>
             <form onSubmit={onSubmit}>
-              {/* Hidden job slug */}
               <input type="hidden" name="job_slug" value="business-operations-associate" />
 
               <div style={{ display:'grid', gap: 12 }}>
@@ -112,7 +109,6 @@ export default function BusinessOpsAssociateApply() {
 
                 <div><div style={label}>Portfolio / GitHub (optional)</div><input name="portfolio" type="url" placeholder="https://github.com/username" style={input} /></div>
 
-                {/* Experiences (3 rows) */}
                 <fieldset style={{ border:'1px dashed #e5e7eb', borderRadius:12, padding:12 }}>
                   <legend style={{ fontSize:13 }}>Relevant experience (up to 3)</legend>
                   {[1,2,3].map(i => (
@@ -125,7 +121,6 @@ export default function BusinessOpsAssociateApply() {
                   ))}
                 </fieldset>
 
-                {/* Custom, job-specific questions (optional) */}
                 <div><div style={label}>Why RocketiQ for this role? (optional)</div><textarea name="q1" rows={4} style={{ ...input, resize:'vertical' }} /></div>
                 <div><div style={label}>Anything else we should know? (optional)</div><textarea name="q2" rows={3} style={{ ...input, resize:'vertical' }} /></div>
 
@@ -139,8 +134,8 @@ export default function BusinessOpsAssociateApply() {
                   <input type="checkbox" name="consent" required /> I consent to RocketiQ processing my data for recruiting.
                 </label>
 
-                {/* Turnstile must be INSIDE the form so it injects the hidden token */}
-                <Turnstile theme="light" /> {/* ← the widget */}
+                {/* Turnstile inside the form */}
+                <Turnstile theme="light" />
 
                 <button
                   type="submit"
