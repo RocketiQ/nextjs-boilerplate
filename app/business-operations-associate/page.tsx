@@ -340,7 +340,7 @@ export default function BusinessOpsAssociateApply() {
         </div>
 
         <p style={{ textAlign: 'center', color: '#9aa4b2', fontSize: 12, marginTop: 20 }}>
-          © {new Date().getFullYear()} RocketiQ
+          © 2025–2027 RocketiQ Next-Gen Learning. All rights reserved.
         </p>
       </div>
     </main>
