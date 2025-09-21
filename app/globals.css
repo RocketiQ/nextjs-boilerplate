@@ -117,6 +117,25 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 3px rgba(245, 181, 36, 0.25);
 }
 
+/* --- Fix checkbox layout --- */
+input[type="checkbox"] {
+  width: auto !important;      /* don't stretch full width */
+  height: auto;
+  display: inline-block;
+  margin-right: 8px;           /* puts the box before the text nicely */
+  vertical-align: middle;
+  accent-color: var(--accent);
+}
+
+/* Optional: tidy the consent row */
+.consent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 /* ---------- Badges & Buttons ---------- */
 .pill {
   display: inline-block;
