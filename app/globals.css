@@ -58,18 +58,22 @@ h2, h3 { color: var(--accent); margin: 20px 0 8px; }
 
 /* Main page container — widened on desktop */
 .apply-shell {
-  max-width: 1200px;      /* wider desktop canvas */
+  max-width: 1200px;                 /* wider desktop canvas */
   margin: 0 auto;
-  padding: 24px;
+  padding-block: 24px;
+  padding-inline: clamp(16px, 4vw, 24px); /* responsive side padding */
 }
 
-/* Two-column grid: content wider than form on desktop */
+/* Two-column grid (content wider than form) */
+/* Use minmax(0, …) so columns are allowed to shrink on mobile */
 .careers-grid {
   display: grid;
   gap: 20px;
-  grid-template-columns: 1.25fr 1fr;  /* content column ~25% wider */
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
   align-items: start;
 }
+/* Ensure grid children can shrink and never push layout horizontally */
+.careers-grid > * { min-width: 0; }
 
 /* Collapse to single column on mobile */
 @media (max-width: 900px) {
@@ -90,6 +94,7 @@ h2, h3 { color: var(--accent); margin: 20px 0 8px; }
   border: 1px solid var(--panel-border);
   border-radius: 12px;
   padding: 16px;
+  min-width: 0; /* critical: prevents right overflow when children are wide */
 }
 
 /* ---------- Form controls (dark) ---------- */
@@ -100,6 +105,7 @@ input, select, textarea {
   border-radius: 10px;
   padding: 10px 12px;
   width: 100%;
+  min-width: 0;     /* critical: allow shrinking inside grid */
 }
 ::placeholder { color: #9aa4b2; }
 input[type="checkbox"] { accent-color: var(--accent); }
