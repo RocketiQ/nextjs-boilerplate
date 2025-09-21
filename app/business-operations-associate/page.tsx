@@ -152,7 +152,7 @@ export default function BusinessOpsAssociateApply() {
               <li><strong>Duration:</strong> minimum 1 year; extensions possible based on performance</li>
               <li><strong>Time:</strong> ~2–3 hours/day (weekday cadence)</li>
               <li><strong>Location:</strong> Remote (India-first; global participation welcome)</li>
-              <li><strong>Compensation:</strong> Unpaid role</li>
+              <li><strong>Compensation:</strong> Unpaid role, but certified.</li>
             </ul>
 
             <h2 style={h2Next}><strong>Application Requirements</strong></h2>
