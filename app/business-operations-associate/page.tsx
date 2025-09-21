@@ -85,8 +85,8 @@ export default function BusinessOpsAssociateApply() {
               <li><strong>Reporting &amp; improvements:</strong> Weekly dashboard (hiring, content, web, events), flag risks, benchmark tools, and suggest small process fixes.</li>
             </ul>
 
-            <h2 style={h2Next}><strong>Requirements</strong></h2>
-            <ul>
+            <h2 style={h2Next}><strong>Qualifications</strong></h2>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
               <li><strong>Education:</strong> bachelor’s graduate or master’s (pursuing/graduate) or PhD (pursuing/graduate).</li>
               <li><strong>Experience:</strong> 1+ years proven leadership/management in operations, program management, or product/people operations.</li>
               <li><strong>Execution:</strong> evidence of shipping on schedules across multiple stakeholders; comfort running meeting rhythms and driving follow-ups.</li>
@@ -105,7 +105,7 @@ export default function BusinessOpsAssociateApply() {
             </ul>
 
             <h2 style={h2Next}><strong>Role Logistics</strong></h2>
-            <ul>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
               <li><strong>Duration:</strong> minimum 1 year; extensions possible based on performance</li>
               <li><strong>Notice period:</strong> 3 months if you choose to leave</li>
               <li><strong>Time:</strong> ~2–3 hours/day (weekday cadence), flexible scheduling with overlap</li>
@@ -114,7 +114,7 @@ export default function BusinessOpsAssociateApply() {
             </ul>
 
             <h2 style={h2Next}><strong>Application Requirements</strong></h2>
-            <ul>
+            <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
               <li><strong>Curriculum Vitae:</strong> Your most recently updated C.V.</li>
               <li><strong>Cover Letter:</strong> Briefly explain fit and motivation for this role.</li>
               <li>
