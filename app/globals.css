@@ -1,85 +1,101 @@
 @import "tailwindcss";
 
-/* ---------- Theme tokens ---------- */
+/* ---------- RocketiQ theme ---------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #0a0f1f;            /* deep space blue */
+  --text: #ffffff;          /* white */
+  --accent: #f5b524;        /* gold tech */
+  --panel: #0f162d;         /* dark card */
+  --panel-border: rgba(245, 181, 36, 0.25);
+  --muted: #a9b3c7;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg);
+  --color-foreground: var(--text);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-/* ---------- Base / reset ---------- */
+/* base / reset */
 html, body { margin: 0; padding: 0; }
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font-geist-sans, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif);
-  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  line-height: 1.6;
 }
 
-/* Media never exceeds screen */
 img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto; }
-
-/* Form controls inherit fonts */
 input, button, textarea, select { font: inherit; }
-
-/* Monospace fallback */
-code, pre {
-  font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace);
-}
-
-/* DO NOT hide horizontal overflow globally — it masks layout bugs */
-/* (removed the previous "main { overflow-x: hidden; }") */
-
-/* Some mobile culprits */
+code, pre { font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace); }
+main { overflow-x: hidden; }
 fieldset { min-width: 0; }
 input[type="file"] { width: 100%; }
 
-/* ---------- Page shell: truly centered with safe gutters ---------- */
-.apply-shell {
-  max-width: 980px;
-  margin-inline: auto;
-  padding-left: 16px;
-  padding-right: 16px;
+/* Headings use gold accent */
+h2, h3 { color: var(--accent); margin: 20px 0 8px; }
+
+/* Little helpers used on the page */
+.apply-shell { max-width: 980px; margin: 0 auto; padding: 24px; }
+
+.card-dk {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 12px;
+  padding: 16px;
 }
 
-/* ---------- Grid helpers ---------- */
+/* responsive grid used on the page */
 .careers-grid {
   display: grid;
   gap: 16px;
-  grid-template-columns: 1fr 1fr; /* desktop: two columns */
+  grid-template-columns: 1fr 1fr;
   align-items: start;
-  width: 100%;
 }
-
-/* CRITICAL: allow grid children to shrink on small screens */
-.careers-grid > * { min-width: 0; }
-
-@media (max-width: 900px) {
-  .careers-grid { grid-template-columns: 1fr; } /* mobile: single column */
-}
+@media (max-width: 900px) { .careers-grid { grid-template-columns: 1fr; } }
 
 .stack-2 {
   display: grid;
   gap: 12px;
   grid-template-columns: 1fr 1fr;
 }
-@media (max-width: 600px) {
-  .stack-2 { grid-template-columns: 1fr; }
+@media (max-width: 600px) { .stack-2 { grid-template-columns: 1fr; } }
+
+/* dark inputs */
+input, select, textarea {
+  background: #0d1530;
+  border: 1px solid #243354;
+  color: var(--text);
+  border-radius: 10px;
+  padding: 10px 12px;
+  width: 100%;
 }
+::placeholder { color: #9aa4b2; }
+input[type="checkbox"] { accent-color: var(--accent); }
+
+/* pill + button */
+.pill {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  border: 0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-disabled { opacity: .6; cursor: not-allowed; }
