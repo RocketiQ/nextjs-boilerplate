@@ -57,7 +57,7 @@ export default function BusinessOpsAssociateApply() {
           <p style={{ color:'#374151', margin:0 }}>Apply below. PDF résumé (≤ 2 MB) required. By submitting, you consent to recruiting data processing.</p>
         </div>
 
-        <div style={{ display:'grid', gap: 16, gridTemplateColumns: '1fr 1fr', alignItems: 'start' }}>
+        <div className="careers-grid">
           {/* Job post (summary) */}
           <section style={card}>
             <h2 style={{ marginTop:0 }}>About RocketiQ</h2>
@@ -88,7 +88,7 @@ export default function BusinessOpsAssociateApply() {
                 <div><div style={label}>Age</div><input name="age" type="number" min={0} placeholder="22" style={input} /></div>
                 <div><div style={label}>Email</div><input name="email" type="email" required placeholder="jane@domain.com" style={input} /></div>
 
-                <div style={{ display:'grid', gap:12, gridTemplateColumns:'1fr 1fr' }}>
+                <div className="stack-2">
                   <div><div style={label}>Country</div><input name="country" placeholder="India" style={input} /></div>
                   <div><div style={label}>State</div><input name="state" placeholder="Karnataka" style={input} /></div>
                 </div>
@@ -116,7 +116,7 @@ export default function BusinessOpsAssociateApply() {
                 <fieldset style={{ border:'1px dashed #e5e7eb', borderRadius:12, padding:12 }}>
                   <legend style={{ fontSize:13 }}>Relevant experience (up to 3)</legend>
                   {[1,2,3].map(i => (
-                    <div key={i} style={{ display:'grid', gap:8, gridTemplateColumns:'1fr 1fr', marginBottom:10 }}>
+                    <div key={i} className="stack-2" style={{ marginBottom: 10 }}>
                       <input name={`exp${i}_role`} placeholder={`Experience ${i}: Role`} style={input} />
                       <input name={`exp${i}_org`} placeholder="Organization" style={input} />
                       <input name={`exp${i}_dates`} placeholder="Dates (e.g., 2023–2024)" style={input} />
