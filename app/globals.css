@@ -22,7 +22,6 @@
 
 /* ---------- Base / reset (prevents mobile overflow) ---------- */
 html, body { margin: 0; padding: 0; }
-
 *, *::before, *::after { box-sizing: border-box; }
 
 body {
@@ -41,7 +40,9 @@ img, picture, video, canvas, svg { display: block; max-width: 100%; height: auto
 input, button, textarea, select { font: inherit; }
 
 /* Monospace fallback */
-code, pre { font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace); }
+code, pre {
+  font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace);
+}
 
 /* Guard against tiny horizontal scroll caused by wide children */
 main { overflow-x: hidden; }
@@ -49,6 +50,13 @@ main { overflow-x: hidden; }
 /* Common mobile overflow culprits */
 fieldset { min-width: 0; }
 input[type="file"] { width: 100%; }
+
+/* ---------- Centering shell for the whole page ---------- */
+.apply-shell {
+  /* Max width 980px; otherwise equal 16px gutters left/right on phones */
+  width: min(980px, 100% - 32px);
+  margin-inline: auto;
+}
 
 /* ---------- RocketiQ Apply: responsive helpers ---------- */
 .careers-grid {
