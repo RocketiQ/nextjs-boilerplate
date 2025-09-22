@@ -112,40 +112,43 @@ export default function GraphicDesignerInternApply() {
 
             <h2 style={h2Next}><strong>About the Role</strong></h2>
             <p>
-              Own webpage layouts end-to-end using the content we provide. This is not a coding role; it’s research + layout with developer-ready outputs.
-              You’ll design desktop/mobile pages in Figma, specify components and interactions, and (when useful) share a lightweight React prototype to clarify behavior.
+              We are seeking creative and technically curious interns for the role of Graphic Designer Intern. This is an unpaid and certified internship designed for students who want to combine their graphic design skills with a passion for space and aerospace sciences.
+              Interns will work on creating educational visual content that communicates complex topics like rocket propulsion, orbital mechanics, astrophysics, and space exploration in engaging and accessible ways.
             </p>
 
             <h2 style={h2Next}><strong>Key Responsibilities</strong></h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
-              <li>Research &amp; curate component references (heros, cards, nav, forms) with source links.</li>
-              <li>Compose desktop + mobile layouts in Figma; set hierarchy, grids, and spacing.</li>
-              <li>Build a small component library (reusable cards, buttons, nav) with variants/states.</li>
-              <li>Add dev-ready specs: redlines, content slots, copy limits, and accessibility notes.</li>
-              <li>Annotate interactions (hover/focus, dropdowns, tabs, accordions, sticky header) and link a click-through prototype.</li>
-              <li>Prepare assets (icons/images) and an export pack; name files consistently.</li>
-              <li>Handoff and QA: review the built page for visual/behavior parity.</li>
+              <li>Translate aerospace and astrophysics concepts into technically accurate and visually engaging content.</li>
+              <li>Design infographics, carousels, posters, and short-form videos on topics such as rockets, satellites, orbital mechanics, and cosmic events.</li>
+              <li>Create visual content for space news, mission explainers, and educational outreach.</li>
+              <li>Contribute creative ideas for spreading space knowledge through social media and outreach campaigns.</li>
+              <li>Participate in weekly review meetings and incorporate feedback.</li>
             </ul>
 
-            <h2 style={h2Next}><strong>Requirements</strong></h2>
+            <h2 style={h2Next}><strong>Qualifications</strong></h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
-              <li>Strong layout sense and component thinking; portfolio of web/UI work.</li>
-              <li>Proficiency with Figma (components, auto-layout, prototypes).</li>
-              <li>Clear communication and organized files.</li>
-              <li>Nice to have: basic HTML/CSS familiarity, simple React layout prototypes, accessibility basics.</li>
+              <li>Strong interest in space science, aerospace, or astrophysics.</li>
+              <li>Proficiency in design tools such as Canva, Adobe Illustrator, Photoshop, or Figma.</li>
+              <li>Ability to think creatively and visually about technical/scientific ideas.</li>
+              <li>Good communication and time management skills.</li>
+              <li>Prior experience in creating social media graphics or video edits is a plus.</li>
             </ul>
 
             <h2 style={h2Next}><strong>What You’ll Gain</strong></h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
-              <li>Certificate of Internship (unique ID) and performance-based Letter of Recommendation.</li>
-              <li>Real shipped pages credited to you; portfolio-ready assets and prototypes.</li>
-              <li>Close collaboration with Content and Engineering; structured feedback/mentorship.</li>
-              <li>Priority consideration for future paid roles or contractor work.</li>
+              <li>A certificate of internship from RocketiQ upon successful completion.</li>
+              <li>A Letter of Recommendation (LOR) based on performance.</li>
+              <li>Opportunity to fast-track into the RocketiQ Research Fellowship for free (subject to performance and qualifications).</li>
+              <li>Portfolio development: Your best work may be published on RocketiQ’s official channels for visibility and credibility</li>
+              <li>Mentorship from researchers and outreach leads in aerospace communication</li>
+              <li>Networking opportunities with RocketiQ’s growing aerospace education and research community
+              <li>Recognition & endorsements for outstanding contributions
+              <li>Exposure to career guidance and pathways in space science, propulsion, and research communication</li>
             </ul>
 
             <h2 style={h2Next}><strong>Role Logistics</strong></h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
-              <li><strong>Duration:</strong> 12 weeks (minimum), extensions possible</li>
+              <li><strong>Duration:</strong> 3 months (minimum), extensions possible</li>
               <li><strong>Time:</strong> ~2 hours/day (~10 hrs/week), flexible</li>
               <li><strong>Location:</strong> Remote (India-first, global participation welcome)</li>
               <li><strong>Compensation:</strong> This is an unpaid internship, but certified.</li>
@@ -153,9 +156,6 @@ export default function GraphicDesignerInternApply() {
 
             <h2 style={h2Next}><strong>Application Deadline</strong></h2>
             <p>Applications will be reviewed immediately upon receipt. The position is open until filled with an anticipated start date of October 1, 2025.</p>
-
-            <h2 style={h2Next}><strong>Selection Process</strong></h2>
-            <p>Screening → interview → Selection → 30-day trial/pilot month → confirmation.</p>
 
             <p style={{ marginTop: 16 }}>
               For any questions or clarifications, feel free to reach out to us at <a href="mailto:contact@therocketiq.com">contact@therocketiq.com</a>
