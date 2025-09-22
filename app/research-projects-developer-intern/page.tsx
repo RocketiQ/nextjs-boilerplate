@@ -114,10 +114,6 @@ export default function ResearchProjectsDeveloperInternApply() {
               <li>Propulsion &amp; Combustion</li>
               <li>High-Speed Flows &amp; CFD</li>
               <li>UAV/Drone Systems</li>
-              <li>Guidance, Navigation &amp; Control</li>
-              <li>AI/ML for Aerospace</li>
-              <li>Space Systems &amp; CubeSats</li>
-              <li>Space Imaging &amp; Computer Vision</li>
               <li>Structures &amp; Materials</li>
               <li>Thermal &amp; Cryogenic Systems</li>
               <li>Space Environments &amp; MMOD</li>
