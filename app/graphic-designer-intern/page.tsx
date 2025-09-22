@@ -141,8 +141,8 @@ export default function GraphicDesignerInternApply() {
               <li>Opportunity to fast-track into the RocketiQ Research Fellowship for free (subject to performance and qualifications).</li>
               <li>Portfolio development: Your best work may be published on RocketiQ’s official channels for visibility and credibility</li>
               <li>Mentorship from researchers and outreach leads in aerospace communication</li>
-              <li>Networking opportunities with RocketiQ’s growing aerospace education and research community
-              <li>Recognition & endorsements for outstanding contributions
+              <li>Networking opportunities with RocketiQ’s growing aerospace education and research community</li>
+              <li>Recognition & endorsements for outstanding contributions</li>
               <li>Exposure to career guidance and pathways in space science, propulsion, and research communication</li>
             </ul>
 
