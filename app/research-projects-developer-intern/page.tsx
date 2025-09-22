@@ -109,7 +109,7 @@ export default function ResearchProjectsDeveloperInternApply() {
               This is not a heavy Git role; basic version control is enough.
             </p>
 
-            <h2 style={h2Next}><strong>Genres (choose one or more)</strong></h2>
+            <h2 style={h2Next}><strong>Genres</strong></h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
               <li>Propulsion &amp; Combustion</li>
               <li>High-Speed Flows &amp; CFD</li>
@@ -134,7 +134,7 @@ export default function ResearchProjectsDeveloperInternApply() {
               <li>Align projects with RocketiQ tone: reproducible, practical, and portfolio-ready.</li>
             </ul>
 
-            <h2 style={h2Next}><strong>Requirements</strong></h2>
+            <h2 style={h2Next}><strong>Qualifications</strong></h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
               <li>3rd-year (or higher) bachelor’s student, OR master’s student (pursuing/graduate).</li>
               <li>Strong fundamentals in one chosen genre; ability to explain clearly.</li>
