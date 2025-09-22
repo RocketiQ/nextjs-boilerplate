@@ -33,36 +33,19 @@ export default function GraphicDesignerInternApply() {
     const fd = new FormData(formEl);
 
     // Conditional requirements: "Other" fields must be non-empty when chosen
-    if (
-      fd.get('qualification') === 'Other' &&
-      !String(fd.get('qualification_other') || '').trim()
-    ) {
+    if (fd.get('qualification') === 'Other' && !String(fd.get('qualification_other') || '').trim()) {
       setPending(false);
-      return setMsg(
-        'Please specify your qualification in the “If Other, specify” field.'
-      );
+      return setMsg('Please specify your qualification in the “If Other, specify” field.');
     }
-    if (
-      fd.get('heard_from') === 'Other' &&
-      !String(fd.get('heard_from_other') || '').trim()
-    ) {
+    if (fd.get('heard_from') === 'Other' && !String(fd.get('heard_from_other') || '').trim()) {
       setPending(false);
-      return setMsg(
-        'Please specify how you heard about this role in the “If Other, specify” field.'
-      );
+      return setMsg('Please specify how you heard about this role in the “If Other, specify” field.');
     }
 
-    // Validate 3 PDFs
+    // Validate only the Résumé/CV (cover/project removed)
     const resume = fd.get('resume') as File | null;
-    const cover = fd.get('cover_letter') as File | null;
-    const project = fd.get('project_summary') as File | null;
-
     const v1 = validatePdf(resume, 'Résumé / CV');
     if (v1) { setFileErr(v1); setPending(false); return; }
-    const v2 = validatePdf(cover, 'Cover Letter');
-    if (v2) { setFileErr(v2); setPending(false); return; }
-    const v3 = validatePdf(project, '1-Page Project Summary');
-    if (v3) { setFileErr(v3); setPending(false); return; }
 
     // Submit to API
     const res = await fetch('/api/apply', { method: 'POST', body: fd });
@@ -172,7 +155,7 @@ export default function GraphicDesignerInternApply() {
             </p>
           </section>
 
-          {/* Right: Apply form (unchanged) */}
+          {/* Right: Apply form */}
           <section className="card-dk">
             <h2 style={h2First}><strong>Apply Now</strong></h2>
 
@@ -235,10 +218,7 @@ export default function GraphicDesignerInternApply() {
                 {qualification === 'Other' && (
                   <div>
                     <div style={label}>If Other, specify</div>
-                    <input
-                      name="qualification_other"
-                      placeholder="e.g., Diploma in … / Alternative credential"
-                    />
+                    <input name="qualification_other" placeholder="e.g., Diploma in … / Alternative credential" />
                   </div>
                 )}
 
@@ -275,17 +255,15 @@ export default function GraphicDesignerInternApply() {
                   </div>
                 )}
 
-                {/* Relevant experience (up to 3) */}
+                {/* Relevant experience — ONLY one row now */}
                 <fieldset style={{ border: '1px dashed var(--panel-border)', borderRadius: 12, padding: 12 }}>
-                  <legend style={{ fontSize: 13, fontWeight: 700 }}>Relevant experience (up to 3)</legend>
-                  {[1, 2, 3].map((i) => (
-                    <div key={i} className="stack-2" style={{ marginBottom: 10 }}>
-                      <input name={`exp${i}_role`} placeholder={`Experience ${i}: Role`} />
-                      <input name={`exp${i}_org`} placeholder="Organization Name" />
-                      <input name={`exp${i}_dates`} placeholder="Dates (e.g., Jan 2022 – Feb 2023)" />
-                      <input name={`exp${i}_summary`} placeholder="1–2 line summary" />
-                    </div>
-                  ))}
+                  <legend style={{ fontSize: 13, fontWeight: 700 }}>Relevant experience</legend>
+                  <div className="stack-2" style={{ marginBottom: 10 }}>
+                    <input name="exp1_role" placeholder="Experience 1: Role" />
+                    <input name="exp1_org" placeholder="Organization Name" />
+                    <input name="exp1_dates" placeholder="Dates (e.g., Jan 2022 – Feb 2023)" />
+                    <input name="exp1_summary" placeholder="1–2 line summary" />
+                  </div>
                 </fieldset>
 
                 {/* Motivation (required) */}
@@ -300,20 +278,10 @@ export default function GraphicDesignerInternApply() {
                   />
                 </div>
 
-                {/* Files */}
+                {/* Files — ONLY Résumé/CV now */}
                 <div>
                   <div style={label}>Résumé / CV (PDF, under 2 MB)</div>
                   <input type="file" name="resume" accept="application/pdf" required />
-                </div>
-
-                <div>
-                  <div style={label}>Cover Letter (PDF, under 2 MB)</div>
-                  <input type="file" name="cover_letter" accept="application/pdf" required />
-                </div>
-
-                <div>
-                  <div style={label}>1-Page Project Summary (PDF, under 2 MB)</div>
-                  <input type="file" name="project_summary" accept="application/pdf" required />
                 </div>
 
                 {fileErr && (
@@ -322,7 +290,7 @@ export default function GraphicDesignerInternApply() {
 
                 {/* Consent */}
                 <label className="consent">
-                  <input type="checkbox" name="consent" required />
+                  <input type="checkbox" name="consent" required />{' '}
                   I consent to RocketiQ processing my data for recruiting.
                 </label>
 
