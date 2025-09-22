@@ -33,13 +33,23 @@ export default function GraphicDesignerInternApply() {
     const fd = new FormData(formEl);
 
     // Conditional requirements: "Other" fields must be non-empty when chosen
-    if (fd.get('qualification') === 'Other' && !String(fd.get('qualification_other') || '').trim()) {
+    if (
+      fd.get('qualification') === 'Other' &&
+      !String(fd.get('qualification_other') || '').trim()
+    ) {
       setPending(false);
-      return setMsg('Please specify your qualification in the “If Other, specify” field.');
+      return setMsg(
+        'Please specify your qualification in the “If Other, specify” field.'
+      );
     }
-    if (fd.get('heard_from') === 'Other' && !String(fd.get('heard_from_other') || '').trim()) {
+    if (
+      fd.get('heard_from') === 'Other' &&
+      !String(fd.get('heard_from_other') || '').trim()
+    ) {
       setPending(false);
-      return setMsg('Please specify how you heard about this role in the “If Other, specify” field.');
+      return setMsg(
+        'Please specify how you heard about this role in the “If Other, specify” field.'
+      );
     }
 
     // Validate 3 PDFs
@@ -74,7 +84,7 @@ export default function GraphicDesignerInternApply() {
     setPending(false);
   }
 
-  // Typography helpers (kept)
+  // Typography helpers
   const h2First: React.CSSProperties = { marginTop: 0, marginBottom: 8, fontWeight: 800, fontSize: 20 };
   const h2Next:  React.CSSProperties = { marginTop: 20, marginBottom: 8, fontWeight: 800, fontSize: 20 };
   const label:   React.CSSProperties = { fontSize: 14, fontWeight: 700, marginBottom: 6, color: 'var(--muted)' };
@@ -142,7 +152,7 @@ export default function GraphicDesignerInternApply() {
               <li>Portfolio development: Your best work may be published on RocketiQ’s official channels for visibility and credibility</li>
               <li>Mentorship from researchers and outreach leads in aerospace communication</li>
               <li>Networking opportunities with RocketiQ’s growing aerospace education and research community</li>
-              <li>Recognition & endorsements for outstanding contributions</li>
+              <li>Recognition &amp; endorsements for outstanding contributions</li>
               <li>Exposure to career guidance and pathways in space science, propulsion, and research communication</li>
             </ul>
 
@@ -171,28 +181,34 @@ export default function GraphicDesignerInternApply() {
 
               <div style={{ display: 'grid', gap: 12 }}>
                 {/* Basics */}
-                <div><div style={label}>Full name</div>
+                <div>
+                  <div style={label}>Full name</div>
                   <input name="name" required placeholder="e.g., Jane Doe" />
                 </div>
 
-                <div><div style={label}>Age</div>
+                <div>
+                  <div style={label}>Age</div>
                   <input name="age" type="number" min={0} required placeholder="e.g., 22" />
                 </div>
 
-                <div><div style={label}>Email</div>
+                <div>
+                  <div style={label}>Email</div>
                   <input name="email" type="email" required placeholder="e.g., jane@domain.com" />
                 </div>
 
                 <div className="stack-2">
-                  <div><div style={label}>Country</div>
+                  <div>
+                    <div style={label}>Country</div>
                     <input name="country" required placeholder="e.g., India" />
                   </div>
-                  <div><div style={label}>State</div>
+                  <div>
+                    <div style={label}>State</div>
                     <input name="state" required placeholder="e.g., Karnataka" />
                   </div>
                 </div>
 
-                <div><div style={label}>WhatsApp (with country code)</div>
+                <div>
+                  <div style={label}>WhatsApp (with country code)</div>
                   <input name="whatsapp" required placeholder="e.g., +919876543210" />
                 </div>
 
@@ -219,11 +235,15 @@ export default function GraphicDesignerInternApply() {
                 {qualification === 'Other' && (
                   <div>
                     <div style={label}>If Other, specify</div>
-                    <input name="qualification_other" placeholder="e.g., Diploma in … / Alternative credential" />
+                    <input
+                      name="qualification_other"
+                      placeholder="e.g., Diploma in … / Alternative credential"
+                    />
                   </div>
                 )}
 
-                <div><div style={label}>Degree name</div>
+                <div>
+                  <div style={label}>Degree name</div>
                   <input name="degree_name" required placeholder="e.g., B.Tech Mechanical" />
                 </div>
 
@@ -255,7 +275,7 @@ export default function GraphicDesignerInternApply() {
                   </div>
                 )}
 
-                {/* Relevant experience */}
+                {/* Relevant experience (up to 3) */}
                 <fieldset style={{ border: '1px dashed var(--panel-border)', borderRadius: 12, padding: 12 }}>
                   <legend style={{ fontSize: 13, fontWeight: 700 }}>Relevant experience (up to 3)</legend>
                   {[1, 2, 3].map((i) => (
