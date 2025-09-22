@@ -1,7 +1,8 @@
+// app/api/apply/route.ts
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-export const runtime = 'nodejs';
+export const runtime = 'nodejs'; // needed for Buffer/file handling
 
 function sanitizeName(s: string) {
   return s.trim().toLowerCase().replace(/[^a-z0-9_-]+/g, '_').slice(0, 60);
@@ -33,7 +34,16 @@ function requirePdf(f: File | null, label: string) {
   if (!f) return `${label} is required.`;
   const isPdf = f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf');
   if (!isPdf) return `${label}: please upload a PDF file.`;
-  const max = 2 * 1024 * 1024;
+  const max = 2 * 1024 * 1024; // 2 MB
+  if (f.size > max) return `${label}: file must be under 2 MB.`;
+  return null;
+}
+
+function optionalPdf(f: File | null, label: string) {
+  if (!f) return null; // truly optional
+  const isPdf = f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf');
+  if (!isPdf) return `${label}: please upload a PDF file.`;
+  const max = 2 * 1024 * 1024; // 2 MB
   if (f.size > max) return `${label}: file must be under 2 MB.`;
   return null;
 }
@@ -47,69 +57,85 @@ export async function POST(req: Request) {
     if (!t.ok) return NextResponse.json({ ok: false, error: t.error }, { status: 400 });
 
     // 2) Required basics (match Option B schema)
-    const job_slug = String(form.get('job_slug') || '');
-    const name = String(form.get('name') || '');
-    const email = String(form.get('email') || '');
+    const job_slug = String(form.get('job_slug') || '').trim();
+    const name = String(form.get('name') || '').trim();
+    const email = String(form.get('email') || '').trim();
+
     const age = Number(form.get('age') || 0) || null;
+    const country = String(form.get('country') || '').trim();
+    const state = String(form.get('state') || '').trim();
+    const whatsapp = String(form.get('whatsapp') || '').trim();
 
-    const country = String(form.get('country') || '');
-    const state = String(form.get('state') || '');
-    const whatsapp = String(form.get('whatsapp') || '');
+    const qualification = String(form.get('qualification') || '').trim();
+    const qualification_other =
+      (String(form.get('qualification_other') || '').trim() || null);
 
-    const qualification = String(form.get('qualification') || '');
-    const qualification_other = String(form.get('qualification_other') || '') || null;
-    const degree_name = String(form.get('degree_name') || '');
+    const degree_name = String(form.get('degree_name') || '').trim();
 
-    const heard_from = String(form.get('heard_from') || '');
-    const heard_from_other = String(form.get('heard_from_other') || '') || null;
+    const heard_from = String(form.get('heard_from') || '').trim();
+    const heard_from_other =
+      (String(form.get('heard_from_other') || '').trim() || null);
 
-    const motivation = String(form.get('q1') || '').trim(); // we store q1 as "motivation"
+    // store q1 as "motivation" (NOT NULL in the DB)
+    const motivation = String(form.get('q1') || '').trim();
 
-    // 3) Required files
+    // 3) Files
     const resume = form.get('resume') as File | null;
-    const cover = form.get('cover_letter') as File | null;
-    const project = form.get('project_summary') as File | null;
+    const cover = form.get('cover_letter') as File | null;        // optional
+    const project = form.get('project_summary') as File | null;   // optional
 
+    // Validate files (Résumé required; others optional)
     const v1 = requirePdf(resume, 'Résumé / CV');
     if (v1) return NextResponse.json({ ok: false, error: v1 }, { status: 400 });
-    const v2 = requirePdf(cover, 'Cover Letter');
+
+    const v2 = optionalPdf(cover, 'Cover Letter');
     if (v2) return NextResponse.json({ ok: false, error: v2 }, { status: 400 });
-    const v3 = requirePdf(project, '1-Page Project Summary');
+
+    const v3 = optionalPdf(project, '1-Page Project Summary');
     if (v3) return NextResponse.json({ ok: false, error: v3 }, { status: 400 });
 
-    if (!job_slug || !name || !email || !country || !state || !whatsapp || !qualification || !degree_name || !heard_from || !motivation) {
+    // Ensure required text fields present
+    if (
+      !job_slug || !name || !email || !country || !state ||
+      !whatsapp || !qualification || !degree_name || !heard_from || !motivation
+    ) {
       return NextResponse.json({ ok: false, error: 'Missing required fields' }, { status: 400 });
     }
 
-    // 4) Optional: experiences bundle (same shape as before)
+    // 4) Experiences (up to 3; tolerate missing)
     const experiences = [
-      { role: String(form.get('exp1_role') || ''), org: String(form.get('exp1_org') || ''), dates: String(form.get('exp1_dates') || ''), summary: String(form.get('exp1_summary') || '') },
-      { role: String(form.get('exp2_role') || ''), org: String(form.get('exp2_org') || ''), dates: String(form.get('exp2_dates') || ''), summary: String(form.get('exp2_summary') || '') },
-      { role: String(form.get('exp3_role') || ''), org: String(form.get('exp3_org') || ''), dates: String(form.get('exp3_dates') || ''), summary: String(form.get('exp3_summary') || '') },
+      { role: String(form.get('exp1_role') || '').trim(), org: String(form.get('exp1_org') || '').trim(), dates: String(form.get('exp1_dates') || '').trim(), summary: String(form.get('exp1_summary') || '').trim() },
+      { role: String(form.get('exp2_role') || '').trim(), org: String(form.get('exp2_org') || '').trim(), dates: String(form.get('exp2_dates') || '').trim(), summary: String(form.get('exp2_summary') || '').trim() },
+      { role: String(form.get('exp3_role') || '').trim(), org: String(form.get('exp3_org') || '').trim(), dates: String(form.get('exp3_dates') || '').trim(), summary: String(form.get('exp3_summary') || '').trim() },
     ].filter(x => x.role || x.org || x.summary);
 
-    const custom_answers: Record<string, any> = {}; // keep if you want to add UTM later
+    const custom_answers: Record<string, any> = {}; // keep for UTM/etc. later
 
-    // 5) Upload files
-    const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
+    // 5) Uploads
+    const supabase = createClient(
+      process.env.SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
+
     const safeName = sanitizeName(name || 'applicant');
 
-    const up = async (folder: string, f: File) => {
+    const uploadPdf = async (folder: string, f: File | null) => {
+      if (!f) return null;
       const bytes = Buffer.from(await f.arrayBuffer());
       const path = `${folder}/${Date.now()}_${safeName}.pdf`;
-      const { error } = await supabase.storage.from('applications').upload(path, bytes, {
-        contentType: 'application/pdf',
-        upsert: false,
-      });
+      const { error } = await supabase
+        .storage
+        .from('applications')
+        .upload(path, bytes, { contentType: 'application/pdf', upsert: false });
       if (error) throw error;
       return path;
     };
 
-    const resume_path = await up('resumes', resume!);
-    const cover_letter_path = await up('covers', cover!);
-    const project_summary_path = await up('projects', project!);
+    const resume_path = await uploadPdf('resumes', resume);
+    const cover_letter_path = await uploadPdf('covers', cover);
+    const project_summary_path = await uploadPdf('projects', project);
 
-    // 6) Insert row (MATCHES Option B columns)
+    // 6) Insert row
     const { error: dbErr } = await supabase.from('applications').insert({
       job_slug,
       name,
@@ -123,10 +149,10 @@ export async function POST(req: Request) {
       degree_name,
       heard_from,
       heard_from_other,
-      motivation,
-      resume_path,
-      cover_letter_path,
-      project_summary_path,
+      motivation,                // NOT NULL in schema
+      resume_path,               // required file
+      cover_letter_path,         // nullable
+      project_summary_path,      // nullable
       experiences,
       custom_answers
     });
