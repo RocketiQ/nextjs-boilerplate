@@ -41,7 +41,8 @@ const jobs: Role[] = [
     title: 'Business Operations Associate',
     slug: 'business-operations-associate',
     href: '/business-operations-associate',
-    blurb: 'Help run cadence, trackers, hiring support, docs & follow-ups across Ops.',
+    blurb:
+      'Help run cadence, trackers, hiring support, docs & follow-ups across Ops.',
     meta: 'Remote • ~2–3 hrs/day • Unpaid (certified)',
   },
 ];
@@ -58,7 +59,7 @@ export default function CareersPage() {
     () => ({
       display: 'grid',
       gap: 20,
-      gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', // 3 across on desktop, wrap on small
+      gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
       alignItems: 'stretch',
     }),
     []
@@ -66,72 +67,57 @@ export default function CareersPage() {
 
   const cardInner: React.CSSProperties = {
     display: 'grid',
-    gap: 10,
+    gap: 12,
     height: '100%',
   };
 
   const metaStyle: React.CSSProperties = {
     color: 'var(--muted)',
-    fontSize: 13,
+    fontSize: 15, // +2px
   };
 
   const heroWrap: React.CSSProperties = {
-    marginTop: 12,
+    marginTop: 8,
     marginBottom: 28,
-  };
-
-  const heroEyebrow: React.CSSProperties = {
-    color: 'var(--muted)',
-    fontSize: 14,
-    marginBottom: 10,
   };
 
   const heroTitle: React.CSSProperties = {
     margin: 0,
     fontWeight: 900,
-    // Big but responsive (roughly like the green design)
-    fontSize: 'clamp(28px, 4.6vw, 56px)',
-    lineHeight: 1.18,
+    fontSize: 'clamp(30px, 5vw, 60px)', // slightly larger
+    lineHeight: 1.16,
     letterSpacing: '-0.02em',
   };
 
   const heroSub: React.CSSProperties = {
     color: 'var(--muted)',
-    marginTop: 12,
-    fontSize: 16,
+    marginTop: 14,
+    fontSize: 18, // +2px
   };
 
   const heroBtns: React.CSSProperties = {
     display: 'flex',
     gap: 12,
-    marginTop: 18,
+    marginTop: 20,
     flexWrap: 'wrap',
   };
 
-  const outlineBtn: React.CSSProperties = {
-    display: 'inline-block',
-    padding: '10px 16px',
-    borderRadius: 12,
-    border: '1px solid var(--accent)',
-    color: 'var(--accent)',
-    textDecoration: 'none',
-  };
-
   const hotLine: React.CSSProperties = {
-    marginTop: 16,
-    fontSize: 14,
+    marginTop: 18,
+    fontSize: 16, // +2px
     color: 'var(--muted)',
   };
 
   const sectionH2: React.CSSProperties = {
-    fontWeight: 800,
-    fontSize: 18,
-    marginTop: 38,
-    marginBottom: 14,
+    fontWeight: 900,
+    fontSize: 'clamp(22px, 2.2vw, 32px)', // much bigger
+    marginTop: 44,
+    marginBottom: 16,
+    letterSpacing: '-0.01em',
   };
 
   return (
-    <main>
+    <main className="careers-page">
       {/* Logo row */}
       <header className="logo-bar">
         <Image
@@ -147,46 +133,74 @@ export default function CareersPage() {
       <div className="apply-shell">
         {/* HERO */}
         <section style={heroWrap} aria-labelledby="careers-hero-title">
-          <div style={heroEyebrow}>Hello and welcome —</div>
           <h1 id="careers-hero-title" style={heroTitle}>
             Start your career in{' '}
-            <span style={{ color: 'var(--accent)' }}>Space Science &amp; Technology</span>
+            <span style={{ color: 'var(--accent)' }}>
+              Space Science &amp; Technology
+            </span>
           </h1>
 
           <p style={heroSub}>India’s first research-native Space edtech startup</p>
 
           <div style={heroBtns}>
-            {/* Keep native anchors so it scrolls to sections */}
-            <a href="#internships" className="btn-primary" style={{ textDecoration: 'none' }}>
+            {/* same physical size for both buttons */}
+            <a
+              href="#internships"
+              className="btn-primary btn-size btn-glow"
+              style={{ textDecoration: 'none' }}
+            >
               Internships
             </a>
-            <a href="#jobs" style={outlineBtn}>Jobs</a>
+            <a
+              href="#jobs"
+              className="btn-ghost btn-size btn-glow"
+              style={{ textDecoration: 'none' }}
+            >
+              Jobs
+            </a>
           </div>
 
           <div style={hotLine}>
             <strong style={{ color: 'var(--text)' }}>Hot vacancies:</strong>{' '}
             <Link href="/graphic-designer-intern">Graphic Designer Intern</Link>,{' '}
-            <Link href="/business-operations-associate">Business Operations Associate</Link>,{' '}
-            <Link href="/research-engineer-intern">Research Engineer Intern</Link>
+            <Link href="/business-operations-associate">
+              Business Operations Associate
+            </Link>
+            , <Link href="/research-engineer-intern">Research Engineer Intern</Link>
           </div>
         </section>
 
         {/* INTERNSHIPS */}
         <section id="internships" aria-labelledby="internships-title">
-          <h2 id="internships-title" style={sectionH2}>Internships</h2>
-          <div style={grid}>
+          <h2 id="internships-title" style={sectionH2}>
+            Internships
+          </h2>
+          <div className="grid-3" style={grid}>
             {internships.map((r) => (
-              <article key={r.slug} className="card-dk" style={cardInner}>
-                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: 'var(--accent)' }}>
+              <article
+                key={r.slug}
+                className="card-dk lift-card"
+                style={cardInner}
+              >
+                <h3
+                  style={{
+                    margin: 0,
+                    fontSize: 20, // +2px
+                    fontWeight: 800,
+                    color: 'var(--accent)',
+                  }}
+                >
                   {r.title}
                 </h3>
                 {r.meta && <div style={metaStyle}>{r.meta}</div>}
-                <p style={{ margin: '6px 0 12px' }}>{r.blurb}</p>
+                <p style={{ margin: '6px 0 12px', fontSize: 16 }}>
+                  {r.blurb}
+                </p>
                 <div style={{ marginTop: 'auto' }}>
                   <Link
                     href={r.href}
                     onClick={() => trackClick(r.slug)}
-                    className="btn-primary"
+                    className="btn-primary btn-glow"
                     style={{ textDecoration: 'none', display: 'inline-block' }}
                   >
                     View role &amp; apply
@@ -199,20 +213,35 @@ export default function CareersPage() {
 
         {/* JOBS */}
         <section id="jobs" aria-labelledby="jobs-title">
-          <h2 id="jobs-title" style={sectionH2}>Jobs</h2>
-          <div style={grid}>
+          <h2 id="jobs-title" style={sectionH2}>
+            Jobs
+          </h2>
+          <div className="grid-3" style={grid}>
             {jobs.map((r) => (
-              <article key={r.slug} className="card-dk" style={cardInner}>
-                <h3 style={{ margin: 0, fontSize: 18, fontWeight: 800, color: 'var(--accent)' }}>
+              <article
+                key={r.slug}
+                className="card-dk lift-card"
+                style={cardInner}
+              >
+                <h3
+                  style={{
+                    margin: 0,
+                    fontSize: 20, // +2px
+                    fontWeight: 800,
+                    color: 'var(--accent)',
+                  }}
+                >
                   {r.title}
                 </h3>
                 {r.meta && <div style={metaStyle}>{r.meta}</div>}
-                <p style={{ margin: '6px 0 12px' }}>{r.blurb}</p>
+                <p style={{ margin: '6px 0 12px', fontSize: 16 }}>
+                  {r.blurb}
+                </p>
                 <div style={{ marginTop: 'auto' }}>
                   <Link
                     href={r.href}
                     onClick={() => trackClick(r.slug)}
-                    className="btn-primary"
+                    className="btn-primary btn-glow"
                     style={{ textDecoration: 'none', display: 'inline-block' }}
                   >
                     View role &amp; apply
@@ -223,10 +252,67 @@ export default function CareersPage() {
           </div>
         </section>
 
-        <p style={{ textAlign: 'center', color: '#9aa4b2', fontSize: 12, marginTop: 28 }}>
-          © {new Date().getFullYear()} RocketiQ Next-Gen Learning. All rights reserved.
+        <p
+          style={{
+            textAlign: 'center',
+            color: '#9aa4b2',
+            fontSize: 12,
+            marginTop: 30,
+          }}
+        >
+          © {new Date().getFullYear()} RocketiQ Next-Gen Learning. All rights
+          reserved.
         </p>
       </div>
+
+      {/* Page-scoped enhancements */}
+      <style jsx global>{`
+        html {
+          scroll-behavior: smooth;
+        }
+        .careers-page .btn-size {
+          width: 160px; /* exact same rectangle for both hero buttons */
+          text-align: center;
+          padding: 12px 16px;
+          border-radius: 12px;
+          font-weight: 700;
+        }
+        .careers-page .btn-ghost {
+          border: 1px solid var(--accent);
+          color: var(--accent);
+          background: transparent;
+        }
+        .careers-page .btn-glow {
+          transition: transform 0.2s ease, box-shadow 0.25s ease, filter 0.2s ease;
+          will-change: transform, box-shadow, filter;
+        }
+        .careers-page .btn-glow:hover {
+          transform: translateY(-1px);
+          box-shadow:
+            0 0 0 2px rgba(255, 200, 60, 0.35) inset,
+            0 0 24px rgba(255, 200, 60, 0.35);
+          filter: saturate(1.05);
+        }
+        .careers-page .lift-card {
+          position: relative;
+          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          will-change: transform, box-shadow;
+        }
+        .careers-page .lift-card:hover {
+          transform: translateY(-6px) scale(1.015);
+          /* border glow + soft elevation */
+          box-shadow:
+            0 0 0 1px rgba(255, 200, 60, 0.35) inset,
+            0 16px 36px rgba(0, 0, 0, 0.35),
+            0 0 40px rgba(255, 200, 60, 0.12);
+        }
+        /* Force 3-up on wider screens */
+        @media (min-width: 1024px) {
+          .careers-page .grid-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }
