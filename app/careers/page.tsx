@@ -45,6 +45,22 @@ const jobs: Role[] = [
       'Help run cadence, trackers, hiring support, docs & follow-ups across Ops.',
     meta: 'Remote ~3-4 hrs/day • Certified',
   },
+  {
+  title: 'Business Operations Manager',
+  slug: 'business-operations-manager',
+  href: '/business-operations-manager',
+  blurb:
+    'Own day-to-day ops across Creative, Web, Hiring/HR, Events & Internal Systems; run cadences, enforce quality, keep teams in sync.',
+  meta: 'Remote ~3 hrs/day • Certified',
+  },
+  {
+  title: 'Principal Research Program Manager',
+  slug: 'principal-research-program-manager',
+  href: '/principal-research-program-manager',
+  blurb:
+    'Lead the Research & Content team; set technical roadmap; author/oversee projects & solvers; enforce CI/reproducibility; deliver workshops/fellowships.',
+  meta: 'Remote ~3 hrs/day • Certified',
+  },
 ];
 
 export default function CareersPage() {
