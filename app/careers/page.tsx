@@ -11,7 +11,7 @@ type Role = {
   meta?: string;
 };
 
-// --- Group 1: Internships (first section) ---
+/* --- Group 1: Internships --- */
 const internships: Role[] = [
   {
     title: 'Graphic Designer Intern',
@@ -29,7 +29,7 @@ const internships: Role[] = [
   },
 ];
 
-// --- Group 2: Part-Time roles (second section) ---
+/* --- Group 2: Part-Time Roles --- */
 const partTimeRoles: Role[] = [
   {
     title: 'Business Operations Associate',
@@ -50,7 +50,9 @@ export default function CareersIndex() {
   const grid: React.CSSProperties = {
     display: 'grid',
     gap: 16,
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    // Columns won’t stretch beyond 460px; grid centers them on wide screens
+    gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 460px))',
+    justifyContent: 'center',
     alignItems: 'stretch',
   };
 
@@ -58,8 +60,6 @@ export default function CareersIndex() {
     display: 'grid',
     gap: 8,
     height: '100%',
-    position: 'relative',
-    zIndex: 1, // let pseudo glows sit behind content
   };
 
   const metaStyle: React.CSSProperties = {
@@ -127,57 +127,18 @@ export default function CareersIndex() {
         </p>
       </div>
 
-      {/* Glow & lift styles (balanced, no weird top-only glow) */}
+      {/* Hover lift (no center glow) + button glow */}
       <style jsx global>{`
         .careers-card {
           position: relative;
-          overflow: visible;
-          transition: transform 200ms ease, box-shadow 200ms ease, filter 200ms ease;
+          transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
           will-change: transform;
-        }
-        .careers-card::before {
-          content: '';
-          position: absolute;
-          inset: -10px;
-          border-radius: 18px;
-          background: radial-gradient(
-            90% 120% at 50% 55%,
-            rgba(245, 181, 36, 0.14),
-            rgba(245, 181, 36, 0.06) 45%,
-            transparent 80%
-          );
-          filter: blur(16px);
-          opacity: 0;
-          transition: opacity 200ms ease, filter 200ms ease, transform 200ms ease;
-          z-index: 0;
-          pointer-events: none;
-        }
-        .careers-card::after {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: 12px;
-          box-shadow: 0 0 0 1px rgba(245, 181, 36, 0.22);
-          opacity: 0;
-          transition: opacity 200ms ease;
-          pointer-events: none;
-          z-index: 0;
         }
         .careers-card:hover,
         .careers-card:focus-within {
           transform: translateY(-3px) scale(1.02);
-          box-shadow: 0 12px 28px rgba(245, 181, 36, 0.1);
-          filter: saturate(1.05);
-        }
-        .careers-card:hover::before,
-        .careers-card:focus-within::before {
-          opacity: 1;
-          filter: blur(22px);
-          transform: scale(1.01);
-        }
-        .careers-card:hover::after,
-        .careers-card:focus-within::after {
-          opacity: 1;
+          box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(245, 181, 36, 0.16);
+          filter: saturate(1.03);
         }
 
         .btn-primary.btn-glow {
@@ -187,7 +148,6 @@ export default function CareersIndex() {
             0 6px 16px rgba(245, 181, 36, 0.14),
             0 0 14px rgba(245, 181, 36, 0.10);
           transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
-          will-change: transform, box-shadow;
         }
         .btn-primary.btn-glow:hover,
         .btn-primary.btn-glow:focus-visible {
@@ -201,8 +161,6 @@ export default function CareersIndex() {
 
         @media (prefers-reduced-motion: reduce) {
           .careers-card,
-          .careers-card::before,
-          .careers-card::after,
           .btn-primary.btn-glow {
             transition: none !important;
           }
