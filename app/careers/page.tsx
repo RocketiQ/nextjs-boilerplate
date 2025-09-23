@@ -17,21 +17,21 @@ const roles: Role[] = [
     slug: 'business-operations-associate',
     href: '/business-operations-associate',
     blurb: 'Help run cadence, trackers, hiring support, docs & follow-ups across Ops.',
-    meta: 'Remote • ~2–3 hrs/day • Unpaid (certified)',
+    meta: 'Remote • ~2–3 hrs/day • Certified',
   },
   {
     title: 'Graphic Designer Intern',
     slug: 'graphic-designer-intern',
     href: '/graphic-designer-intern',
     blurb: 'Design educational visuals for rockets, space, and astrophysics.',
-    meta: 'Remote • ~10 hrs/week • Unpaid (certified)',
+    meta: 'Remote • ~2–3 hrs/day • Certified',
   },
   {
     title: 'Research Projects Developer Intern',
     slug: 'research-projects-developer-intern',
     href: '/research-projects-developer-intern',
     blurb: 'Build 4-week, code-backed workshop projects with milestones & rubrics.',
-    meta: 'Remote • ~10 hrs/week • Unpaid (certified)',
+    meta: 'Remote • ~2–3 hrs/day • Certified',
   },
 ];
 
