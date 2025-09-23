@@ -108,18 +108,15 @@ export default function ResearchEngineerInternApply() {
               Own an end-to-end, research-grade project—open-source or closed-source (proprietary). You’ll define scope, implement core methods, validate results, and ship a contributor-friendly repository that meets RocketiQ’s quality bar (reproducibility, CI, docs, licensing). This role emphasizes modeling, testing, and Git.
             </p>
 
-            <p><strong>Genres (choose one)</strong></p>
+            <h2 style={h2Next}><strong>Genres</strong></h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
-              <li>High-Speed Propulsion &amp; RDE</li>
-              <li>Compressible CFD &amp; Shock Physics</li>
-              <li>UAV Autonomy &amp; SLAM</li>
-              <li>Flight Dynamics &amp; GNC</li>
-              <li>AI/ML for Simulation and Test</li>
-              <li>Space Imaging &amp; Earth Observation Analytics</li>
-              <li>Avionics &amp; Telemetry</li>
-              <li>Aerostructures &amp; FSI</li>
-              <li>Thermal/Fluids for Space</li>
-              <li>Digital Twins &amp; MLOps for Aero</li>
+              <li>Propulsion &amp; Combustion</li>
+              <li>High-Speed Flows &amp; CFD</li>
+              <li>UAV/Drone Systems</li>
+              <li>Structures &amp; Materials</li>
+              <li>Thermal &amp; Cryogenic Systems</li>
+              <li>Space Environments &amp; MMOD</li>
+              <li>Human Factors &amp; Mission Ops</li>
             </ul>
 
             <h2 style={h2Next}><strong>Key Responsibilities</strong></h2>
