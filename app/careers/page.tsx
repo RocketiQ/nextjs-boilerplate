@@ -71,6 +71,9 @@ export default function CareersPage() {
     const nodeSpacing = 60;
     const interactionRadius = 150;
 
+    let lastSpawn = 0;
+    const SPAWN_INTERVAL_MS = 90; // increase to slow further (e.g., 120–150)
+
     interface Node {
       x: number;
       y: number;
@@ -146,15 +149,18 @@ export default function CareersPage() {
         ctx.fill();
       }
 
-      // probabilistic purple links between energized nodes
-      if (Math.random() < 0.2) {
-        const active = nodes.filter((n) => n.energy > 0.5);
-        if (active.length > 1) {
-          const a = active[Math.floor(Math.random() * active.length)];
-          const b = active[Math.floor(Math.random() * active.length)];
-          if (a !== b) links.push(new Link(a, b));
-        }
-      }
+// throttled spawn of purple links between energized nodes
+const now = performance.now();
+if (now - lastSpawn >= SPAWN_INTERVAL_MS) {
+  const active = nodes.filter((n) => n.energy > 0.5);
+  if (active.length > 1) {
+    const a = active[Math.floor(Math.random() * active.length)];
+    const b = active[Math.floor(Math.random() * active.length)];
+    if (a !== b) links.push(new Link(a, b));
+  }
+  lastSpawn = now;
+}
+
 
       for (let i = links.length - 1; i >= 0; i--) {
         const L = links[i];
