@@ -116,7 +116,7 @@ export default function CareersPage() {
         this.life = 1;
       }
       update() {
-        this.life -= 0.03;
+        this.life -= 0.02;
       }
       draw() {
         // Quadratic curve with a gentle bend
