@@ -43,7 +43,7 @@ const jobs: Role[] = [
     href: '/business-operations-associate',
     blurb:
       'Help run cadence, trackers, hiring support, docs & follow-ups across Ops.',
-    meta: 'Remote ~3-4 hrs/day • Certified',
+    meta: 'Remote ~3 hrs/day • Certified',
   },
   {
   title: 'Business Operations Manager',
@@ -51,7 +51,7 @@ const jobs: Role[] = [
   href: '/business-operations-manager',
   blurb:
     'Own day-to-day ops across Creative, Web, Hiring/HR, Events & Internal Systems; run cadences, enforce quality, keep teams in sync.',
-  meta: 'Remote ~3 hrs/day • Certified',
+  meta: 'Remote ~3-4 hrs/day • Certified',
   },
   {
   title: 'Principal Research Program Manager',
