@@ -27,6 +27,13 @@ const internships: Role[] = [
     blurb: 'Build 4-week, code-backed workshop projects with milestones & rubrics.',
     meta: 'Remote • ~10 hrs/week • Unpaid (certified)',
   },
+  {
+  title: 'Research Engineer Intern',
+  slug: 'research-engineer-intern',
+  href: '/research-engineer-intern',
+  blurb: 'Own and ship a research-grade repo with CI, docs, and tests.',
+  meta: 'Remote • ~10 hrs/week • Unpaid (certified)',
+}
 ];
 
 /* --- Group 2: Part-Time Roles --- */
