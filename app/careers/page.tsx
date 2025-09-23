@@ -46,27 +46,27 @@ const jobs: Role[] = [
     meta: 'Remote ~3 hrs/day • Certified',
   },
   {
-    title: 'Business Operations Manager',
-    slug: 'business-operations-manager',
-    href: '/business-operations-manager',
-    blurb:
-      'Own day-to-day ops across Creative, Web, Hiring/HR, Events & Internal Systems; run cadences, enforce quality, keep teams in sync.',
-    meta: 'Remote ~3-4 hrs/day • Certified',
+  title: 'Business Operations Manager',
+  slug: 'business-operations-manager',
+  href: '/business-operations-manager',
+  blurb:
+    'Own day-to-day ops across Creative, Web, Hiring/HR, Events & Internal Systems; run cadences, enforce quality, keep teams in sync.',
+  meta: 'Remote ~3-4 hrs/day • Certified',
   },
   {
-    title: 'Principal Research Program Manager',
-    slug: 'principal-research-program-manager',
-    href: '/principal-research-program-manager',
-    blurb:
-      'Lead the Research & Content team; set technical roadmap; author/oversee projects & solvers; enforce CI/reproducibility; deliver workshops/fellowships.',
-    meta: 'Remote ~3 hrs/day • Certified',
+  title: 'Principal Research Program Manager',
+  slug: 'principal-research-program-manager',
+  href: '/principal-research-program-manager',
+  blurb:
+    'Lead the Research & Content team; set technical roadmap; author/oversee projects & solvers; enforce CI/reproducibility; deliver workshops/fellowships.',
+  meta: 'Remote ~3 hrs/day • Certified',
   },
 ];
 
 export default function CareersPage() {
   const bgCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // ---- Background Animation (Desktop: slowed neural curves on hover; Mobile: twinkling dots, no links) ----
+  // ---- Background Animation (slowed neural curves; no custom cursor) ----
   useEffect(() => {
     const canvas = bgCanvasRef.current;
     if (!canvas) return;
@@ -79,45 +79,28 @@ export default function CareersPage() {
     let height = 0;
     let raf = 0;
 
-    // Feature-detect for desktop-like hover capability
-    const hasHover = typeof window !== 'undefined' && window.matchMedia('(hover: hover)').matches;
-    const finePointer = typeof window !== 'undefined' && window.matchMedia('(pointer: fine)').matches;
-    const isDesktopLike = hasHover && finePointer;
-
-    // Shared tunables
-    const NODE_SPACING = 60;
-    const ENERGY_DECAY = 0.975;
-
-    // --- Desktop (hover-curves) tunables (kept from your slowed version)
+    // Mouse + gating
     let mouseX = -1e6;
     let mouseY = -1e6;
     let lastMouseMove = 0;
 
-    const INTERACTION_RADIUS = 110;
-    const SPAWN_INTERVAL_MS = 220;
-    const NODE_COOLDOWN_MS = 450;
-    const MAX_LINKS = 28;
-    const ENERGY_HIT = 1.0;
-    const ACTIVE_THRESHOLD = 0.72;
-    const NEED_RECENT_MOVE_MS = 120;
-
-    // --- Mobile (twinkle) tunables
-    // Each node has a unique phase/speed so they breathe asynchronously.
-    // No links on mobile.
-    const TWINKLE_MIN_SPEED = 0.0006; // radians/ms
-    const TWINKLE_MAX_SPEED = 0.0012;
-    const DOT_BASE_RADIUS = 1.0;
-    const DOT_PULSE_AMPL = 2.0; // how much the dot grows when brightening
+    // Tunables (slower behavior)
+    const NODE_SPACING = 60;
+    const INTERACTION_RADIUS = 110;      // smaller = fewer active nodes
+    const SPAWN_INTERVAL_MS = 220;       // higher = slower global spawning
+    const NODE_COOLDOWN_MS = 450;        // per-node pairing cooldown
+    const MAX_LINKS = 28;                // cap simultaneous links
+    const ENERGY_HIT = 1.0;              // energy spike on hover
+    const ENERGY_DECAY = 0.975;          // energy decay per frame
+    const ACTIVE_THRESHOLD = 0.72;       // only “very active” nodes can pair
+    const NEED_RECENT_MOVE_MS = 120;     // require very recent mouse movement
 
     interface Node {
       x: number;
       y: number;
       energy: number;
-      radius: number;          // base radius (desktop)
-      cooldownUntil: number;   // desktop: link spawn cooldown
-      phase: number;           // mobile: twinkle starting phase
-      speed: number;           // mobile: angular speed
-      jitter: number;          // mobile: slight opacity variance
+      radius: number;
+      cooldownUntil: number; // timestamp until which node cannot spawn
     }
 
     class Link {
@@ -129,7 +112,9 @@ export default function CareersPage() {
         this.end = end;
         this.life = 1;
       }
-      update() { this.life -= 0.03; }
+      update() {
+        this.life -= 0.03; // fade speed (visual only)
+      }
       draw() {
         ctx.beginPath();
         ctx.moveTo(this.start.x, this.start.y);
@@ -146,9 +131,6 @@ export default function CareersPage() {
 
     const nodes: Node[] = [];
     const links: Link[] = [];
-    let lastSpawn = 0;
-
-    const rand = (min: number, max: number) => min + Math.random() * (max - min);
 
     const resize = () => {
       width = canvas.width = window.innerWidth;
@@ -161,118 +143,97 @@ export default function CareersPage() {
             x: x + (Math.random() * 20 - 10),
             y: y + (Math.random() * 20 - 10),
             energy: 0,
-            radius: DOT_BASE_RADIUS,
+            radius: 1,
             cooldownUntil: 0,
-            phase: Math.random() * Math.PI * 2,
-            speed: rand(TWINKLE_MIN_SPEED, TWINKLE_MAX_SPEED),
-            jitter: rand(-0.08, 0.12), // slight per-dot opacity variance
           });
         }
       }
     };
 
     const onMove = (e: MouseEvent) => {
-      // Desktop only
-      if (!isDesktopLike) return;
       mouseX = e.clientX;
       mouseY = e.clientY;
       lastMouseMove = performance.now();
     };
 
+    let lastSpawn = 0;
+
     const animate = () => {
       const now = performance.now();
       ctx.clearRect(0, 0, width, height);
 
-      if (isDesktopLike) {
-        // ---- DESKTOP: hover energizes dots + occasional links
-        for (const n of nodes) {
-          const dist = Math.hypot(n.x - mouseX, n.y - mouseY);
-          if (dist < INTERACTION_RADIUS) n.energy = ENERGY_HIT;
-          n.energy *= ENERGY_DECAY;
+      // update + draw nodes
+      for (const n of nodes) {
+        const dist = Math.hypot(n.x - mouseX, n.y - mouseY);
+        if (dist < INTERACTION_RADIUS) n.energy = ENERGY_HIT;
+        n.energy *= ENERGY_DECAY;
 
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, n.radius + n.energy * 2, 0, Math.PI * 2);
-          const opacity = 0.18 + n.energy * 0.6;
-          ctx.fillStyle = `rgba(56, 189, 248, ${opacity})`; // cyan-ish dots
-          ctx.fill();
-        }
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.radius + n.energy * 2, 0, Math.PI * 2);
+        const opacity = 0.18 + n.energy * 0.6;
+        ctx.fillStyle = `rgba(56, 189, 248, ${opacity})`; // cyan-ish dots
+        ctx.fill();
+      }
 
-        // Spawn throttling & gating (desktop)
-        const canTrySpawn =
-          now - lastSpawn >= SPAWN_INTERVAL_MS &&
-          now - lastMouseMove <= NEED_RECENT_MOVE_MS &&
-          links.length < MAX_LINKS;
+      // Spawn throttling & gating
+      const canTrySpawn =
+        now - lastSpawn >= SPAWN_INTERVAL_MS &&
+        now - lastMouseMove <= NEED_RECENT_MOVE_MS &&
+        links.length < MAX_LINKS;
 
-        if (canTrySpawn) {
-          const ready = nodes.filter(
-            (n) => n.energy > ACTIVE_THRESHOLD && now >= n.cooldownUntil
-          );
+      if (canTrySpawn) {
+        // Energetic nodes ready to pair (and off cooldown)
+        const ready = nodes.filter(
+          (n) => n.energy > ACTIVE_THRESHOLD && now >= n.cooldownUntil
+        );
 
-          if (ready.length > 1) {
-            const a = ready[Math.floor(Math.random() * ready.length)];
-            let b: Node | null = null;
-            for (let tries = 0; tries < 6; tries++) {
-              const cand = ready[Math.floor(Math.random() * ready.length)];
-              if (cand !== a && Math.hypot(cand.x - a.x, cand.y - a.y) < 260) {
-                b = cand;
-                break;
-              }
+        if (ready.length > 1) {
+          // Pick two distinct nodes that are not too far apart
+          const a = ready[Math.floor(Math.random() * ready.length)];
+          let b: Node | null = null;
+          // try up to 6 picks to find a reasonably close partner
+          for (let tries = 0; tries < 6; tries++) {
+            const cand = ready[Math.floor(Math.random() * ready.length)];
+            if (cand !== a && Math.hypot(cand.x - a.x, cand.y - a.y) < 260) {
+              b = cand;
+              break;
             }
-            if (b && a !== b) {
-              links.push(new Link(a, b));
-              a.cooldownUntil = now + NODE_COOLDOWN_MS;
-              b.cooldownUntil = now + NODE_COOLDOWN_MS;
-              lastSpawn = now;
-            } else {
-              lastSpawn = now - SPAWN_INTERVAL_MS * 0.5;
-            }
-          } else {
-            lastSpawn = now - SPAWN_INTERVAL_MS * 0.4;
           }
+          if (b && a !== b) {
+            links.push(new Link(a, b));
+            a.cooldownUntil = now + NODE_COOLDOWN_MS;
+            b.cooldownUntil = now + NODE_COOLDOWN_MS;
+            lastSpawn = now;
+          } else {
+            // even if we didn't find a partner, don't hammer spawn attempts
+            lastSpawn = now - (SPAWN_INTERVAL_MS * 0.5);
+          }
+        } else {
+          // not enough eligible nodes; back off a bit
+          lastSpawn = now - (SPAWN_INTERVAL_MS * 0.4);
         }
+      }
 
-        // Update/draw links and prune
-        for (let i = links.length - 1; i >= 0; i--) {
-          const L = links[i];
-          L.update();
-          L.draw();
-          if (L.life <= 0) links.splice(i, 1);
-        }
-      } else {
-        // ---- MOBILE: twinkling dots (no hover, no links)
-        for (const n of nodes) {
-          // independent breathing via phase + speed
-          const phase = n.phase + now * n.speed;
-          // brightness: 0.35..1.0 (soft floor to avoid disappearing)
-          const bright = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(phase));
-          // subtle radius pulse
-          const r = DOT_BASE_RADIUS + DOT_PULSE_AMPL * (bright - 0.35);
-
-          ctx.beginPath();
-          ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
-          // base cyan-ish with node-specific jitter
-          const opacity = Math.min(1, Math.max(0.08, 0.18 + 0.6 * bright + n.jitter));
-          ctx.fillStyle = `rgba(56, 189, 248, ${opacity})`;
-          ctx.fill();
-        }
+      // Update/draw links and prune
+      for (let i = links.length - 1; i >= 0; i--) {
+        const L = links[i];
+        L.update();
+        L.draw();
+        if (L.life <= 0) links.splice(i, 1);
       }
 
       raf = requestAnimationFrame(animate);
     };
 
+    window.addEventListener('mousemove', onMove);
     window.addEventListener('resize', resize);
-    if (isDesktopLike) {
-      window.addEventListener('mousemove', onMove);
-    }
     resize();
     animate();
 
     return () => {
       cancelAnimationFrame(raf);
+      window.removeEventListener('mousemove', onMove);
       window.removeEventListener('resize', resize);
-      if (isDesktopLike) {
-        window.removeEventListener('mousemove', onMove);
-      }
     };
   }, []);
 
