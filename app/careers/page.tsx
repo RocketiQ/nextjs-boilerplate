@@ -149,17 +149,17 @@ export default function CareersPage() {
         ctx.fill();
       }
 
-// throttled spawn of purple links between energized nodes
-const now = performance.now();
-if (now - lastSpawn >= SPAWN_INTERVAL_MS) {
-  const active = nodes.filter((n) => n.energy > 0.5);
-  if (active.length > 1) {
-    const a = active[Math.floor(Math.random() * active.length)];
-    const b = active[Math.floor(Math.random() * active.length)];
-    if (a !== b) links.push(new Link(a, b));
-  }
-  lastSpawn = now;
-}
+      // throttled spawn of purple links between energized nodes
+      const now = performance.now();
+      if (now - lastSpawn >= SPAWN_INTERVAL_MS) {
+        const active = nodes.filter((n) => n.energy > 0.5);
+        if (active.length > 1) {
+          const a = active[Math.floor(Math.random() * active.length)];
+          const b = active[Math.floor(Math.random() * active.length)];
+          if (a !== b) links.push(new Link(a, b));
+        }
+        lastSpawn = now;
+      }
 
 
       for (let i = links.length - 1; i >= 0; i--) {
