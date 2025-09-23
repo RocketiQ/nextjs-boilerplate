@@ -18,21 +18,21 @@ const internships: Role[] = [
     slug: 'graphic-designer-intern',
     href: '/graphic-designer-intern',
     blurb: 'Design educational visuals for rockets, space, and astrophysics.',
-    meta: 'Remote ~2 hrs/day • Certified',
+    meta: 'Remote • ~10 hrs/week • Unpaid (certified)',
   },
   {
     title: 'Research Projects Developer Intern',
     slug: 'research-projects-developer-intern',
     href: '/research-projects-developer-intern',
     blurb: 'Build 4-week, code-backed workshop projects with milestones & rubrics.',
-    meta: 'Remote ~2–3 hrs/day • Certified',
+    meta: 'Remote • ~10 hrs/week • Unpaid (certified)',
   },
   {
     title: 'Research Engineer Intern',
     slug: 'research-engineer-intern',
     href: '/research-engineer-intern',
     blurb: 'Own and ship a research-grade repo with CI, docs, and tests.',
-    meta: 'Remote ~3-4 hrs/day • Certified',
+    meta: 'Remote • ~10 hrs/week • Unpaid (certified)',
   },
 ];
 
@@ -43,30 +43,31 @@ const jobs: Role[] = [
     href: '/business-operations-associate',
     blurb:
       'Help run cadence, trackers, hiring support, docs & follow-ups across Ops.',
-    meta: 'Remote ~3 hrs/day • Certified',
+    meta: 'Remote • ~2–3 hrs/day • Unpaid (certified)',
   },
-  {
-  title: 'Business Operations Manager',
-  slug: 'business-operations-manager',
-  href: '/business-operations-manager',
-  blurb:
-    'Own day-to-day ops across Creative, Web, Hiring/HR, Events & Internal Systems; run cadences, enforce quality, keep teams in sync.',
-  meta: 'Remote ~3-4 hrs/day • Certified',
-  },
-  {
-  title: 'Principal Research Program Manager',
-  slug: 'principal-research-program-manager',
-  href: '/principal-research-program-manager',
-  blurb:
-    'Lead the Research & Content team; set technical roadmap; author/oversee projects & solvers; enforce CI/reproducibility; deliver workshops/fellowships.',
-  meta: 'Remote ~3 hrs/day • Certified',
-  },
+  // You can paste the new roles here manually as you mentioned
+  // {
+  //   title: 'Business Operations Manager',
+  //   slug: 'business-operations-manager',
+  //   href: '/business-operations-manager',
+  //   blurb:
+  //     'Own day-to-day ops across Creative, Web, Hiring/HR, Events & Internal Systems; run cadences, enforce quality, keep teams in sync.',
+  //   meta: 'Remote ~3 hrs/day • Certified',
+  // },
+  // {
+  //   title: 'Principal Research Program Manager',
+  //   slug: 'principal-research-program-manager',
+  //   href: '/principal-research-program-manager',
+  //   blurb:
+  //     'Lead the Research & Content team; set technical roadmap; author/oversee projects & solvers; enforce CI/reproducibility; deliver workshops/fellowships.',
+  //   meta: 'Remote ~3 hrs/day • Certified',
+  // },
 ];
 
 export default function CareersPage() {
   const bgCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // ---- Background Animation (slowed neural curves; no custom cursor) ----
+  // ---- Background Animation (desktop: hover; mobile: scroll) ----
   useEffect(() => {
     const canvas = bgCanvasRef.current;
     if (!canvas) return;
@@ -79,28 +80,37 @@ export default function CareersPage() {
     let height = 0;
     let raf = 0;
 
-    // Mouse + gating
+    // Capability detection
+    const hasHover = window.matchMedia('(hover: hover)').matches;
+    const finePointer = window.matchMedia('(pointer: fine)').matches;
+    const isDesktopLike = hasHover && finePointer; // treat others as mobile-like
+
+    // Shared state
+    let lastSpawn = 0;
+    let lastInteractTime = 0; // mouse move or scroll “recentness”
+    const MAX_LINKS = 28;
+    const ENERGY_HIT = 1.0;
+    const ENERGY_DECAY = 0.975;
+    const ACTIVE_THRESHOLD = 0.72;
+    const SPAWN_INTERVAL_MS = 220;
+    const INTERACT_WINDOW_MS = 140; // must have interacted recently to spawn
+
+    // Desktop (hover) state
     let mouseX = -1e6;
     let mouseY = -1e6;
-    let lastMouseMove = 0;
+    const INTERACTION_RADIUS = 110;
 
-    // Tunables (slower behavior)
-    const NODE_SPACING = 60;
-    const INTERACTION_RADIUS = 110;      // smaller = fewer active nodes
-    const SPAWN_INTERVAL_MS = 220;       // higher = slower global spawning
-    const NODE_COOLDOWN_MS = 450;        // per-node pairing cooldown
-    const MAX_LINKS = 28;                // cap simultaneous links
-    const ENERGY_HIT = 1.0;              // energy spike on hover
-    const ENERGY_DECAY = 0.975;          // energy decay per frame
-    const ACTIVE_THRESHOLD = 0.72;       // only “very active” nodes can pair
-    const NEED_RECENT_MOVE_MS = 120;     // require very recent mouse movement
+    // Mobile (scroll) state
+    let bandY = 0;                // moving horizontal band position
+    const BAND_RADIUS = 140;      // thickness of energized band
+    let lastScrollY = window.scrollY || 0;
 
     interface Node {
       x: number;
       y: number;
       energy: number;
       radius: number;
-      cooldownUntil: number; // timestamp until which node cannot spawn
+      cooldownUntil: number; // per-node pairing cooldown
     }
 
     class Link {
@@ -113,7 +123,7 @@ export default function CareersPage() {
         this.life = 1;
       }
       update() {
-        this.life -= 0.03; // fade speed (visual only)
+        this.life -= 0.03;
       }
       draw() {
         ctx.beginPath();
@@ -129,6 +139,8 @@ export default function CareersPage() {
       }
     }
 
+    const NODE_SPACING = 60;
+    const NODE_COOLDOWN_MS = 450;
     const nodes: Node[] = [];
     const links: Link[] = [];
 
@@ -148,50 +160,88 @@ export default function CareersPage() {
           });
         }
       }
+
+      // Reset band to current scroll position on resize (mobile)
+      if (!isDesktopLike) {
+        bandY = (window.scrollY || 0) % height;
+      }
     };
 
+    // Desktop: mouse hover interaction
     const onMove = (e: MouseEvent) => {
+      if (!isDesktopLike) return;
       mouseX = e.clientX;
       mouseY = e.clientY;
-      lastMouseMove = performance.now();
+      lastInteractTime = performance.now();
     };
 
-    let lastSpawn = 0;
+    // Mobile: scroll interaction (touchmove/scroll)
+    const onScroll = () => {
+      if (isDesktopLike) return;
+      const now = performance.now();
+      const y = window.scrollY || 0;
+      const delta = Math.abs(y - lastScrollY);
+      lastScrollY = y;
+
+      // Only treat as interaction if there's real movement
+      if (delta >= 1) {
+        // Map scroll position into the viewport height for a moving band
+        bandY = y % height;
+        lastInteractTime = now;
+      }
+    };
 
     const animate = () => {
       const now = performance.now();
       ctx.clearRect(0, 0, width, height);
 
-      // update + draw nodes
-      for (const n of nodes) {
-        const dist = Math.hypot(n.x - mouseX, n.y - mouseY);
-        if (dist < INTERACTION_RADIUS) n.energy = ENERGY_HIT;
-        n.energy *= ENERGY_DECAY;
+      // Update & draw nodes
+      if (isDesktopLike) {
+        // Desktop: energize nodes near the pointer
+        for (const n of nodes) {
+          const dist = Math.hypot(n.x - mouseX, n.y - mouseY);
+          if (dist < INTERACTION_RADIUS) n.energy = ENERGY_HIT;
+          n.energy *= ENERGY_DECAY;
 
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.radius + n.energy * 2, 0, Math.PI * 2);
-        const opacity = 0.18 + n.energy * 0.6;
-        ctx.fillStyle = `rgba(56, 189, 248, ${opacity})`; // cyan-ish dots
-        ctx.fill();
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.radius + n.energy * 2, 0, Math.PI * 2);
+          const opacity = 0.18 + n.energy * 0.6;
+          ctx.fillStyle = `rgba(56, 189, 248, ${opacity})`;
+          ctx.fill();
+        }
+      } else {
+        // Mobile: energize a horizontal band that follows scroll
+        // Also add a subtle time wobble so the band breathes a bit
+        const wobble = Math.sin(now / 600) * 10;
+        const centerY = (bandY + wobble + height) % height;
+
+        for (const n of nodes) {
+          const distY = Math.abs(n.y - centerY);
+          if (distY < BAND_RADIUS) n.energy = ENERGY_HIT;
+          n.energy *= ENERGY_DECAY;
+
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.radius + n.energy * 2, 0, Math.PI * 2);
+          const opacity = 0.18 + n.energy * 0.6;
+          ctx.fillStyle = `rgba(56, 189, 248, ${opacity})`;
+          ctx.fill();
+        }
       }
 
-      // Spawn throttling & gating
+      // Spawn gating (works for both modes)
       const canTrySpawn =
         now - lastSpawn >= SPAWN_INTERVAL_MS &&
-        now - lastMouseMove <= NEED_RECENT_MOVE_MS &&
+        now - lastInteractTime <= INTERACT_WINDOW_MS &&
         links.length < MAX_LINKS;
 
       if (canTrySpawn) {
-        // Energetic nodes ready to pair (and off cooldown)
         const ready = nodes.filter(
           (n) => n.energy > ACTIVE_THRESHOLD && now >= n.cooldownUntil
         );
 
         if (ready.length > 1) {
-          // Pick two distinct nodes that are not too far apart
           const a = ready[Math.floor(Math.random() * ready.length)];
           let b: Node | null = null;
-          // try up to 6 picks to find a reasonably close partner
           for (let tries = 0; tries < 6; tries++) {
             const cand = ready[Math.floor(Math.random() * ready.length)];
             if (cand !== a && Math.hypot(cand.x - a.x, cand.y - a.y) < 260) {
@@ -199,18 +249,16 @@ export default function CareersPage() {
               break;
             }
           }
-          if (b && a !== b) {
+          if (b) {
             links.push(new Link(a, b));
             a.cooldownUntil = now + NODE_COOLDOWN_MS;
             b.cooldownUntil = now + NODE_COOLDOWN_MS;
             lastSpawn = now;
           } else {
-            // even if we didn't find a partner, don't hammer spawn attempts
-            lastSpawn = now - (SPAWN_INTERVAL_MS * 0.5);
+            lastSpawn = now - SPAWN_INTERVAL_MS * 0.5;
           }
         } else {
-          // not enough eligible nodes; back off a bit
-          lastSpawn = now - (SPAWN_INTERVAL_MS * 0.4);
+          lastSpawn = now - SPAWN_INTERVAL_MS * 0.4;
         }
       }
 
@@ -225,15 +273,30 @@ export default function CareersPage() {
       raf = requestAnimationFrame(animate);
     };
 
-    window.addEventListener('mousemove', onMove);
+    // Listeners
     window.addEventListener('resize', resize);
+    if (isDesktopLike) {
+      window.addEventListener('mousemove', onMove);
+    } else {
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('touchmove', onScroll, { passive: true });
+      // Initialize band at mount
+      bandY = (window.scrollY || 0) % (height || 1);
+      lastInteractTime = performance.now();
+    }
+
     resize();
     animate();
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener('mousemove', onMove);
       window.removeEventListener('resize', resize);
+      if (isDesktopLike) {
+        window.removeEventListener('mousemove', onMove);
+      } else {
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('touchmove', onScroll);
+      }
     };
   }, []);
 
@@ -258,7 +321,11 @@ export default function CareersPage() {
   const metaStyle: React.CSSProperties = { color: 'var(--muted)', fontSize: 15 };
   const heroWrap: React.CSSProperties = { marginTop: 8, marginBottom: 28 };
   const heroTitle: React.CSSProperties = {
-    margin: 0, fontWeight: 900, fontSize: 'clamp(30px, 5vw, 60px)', lineHeight: 1.16, letterSpacing: '-0.02em',
+    margin: 0,
+    fontWeight: 900,
+    fontSize: 'clamp(30px, 5vw, 60px)',
+    lineHeight: 1.16,
+    letterSpacing: '-0.02em',
   };
   const heroSub: React.CSSProperties = { color: 'var(--muted)', marginTop: 14, fontSize: 18 };
   const heroBtns: React.CSSProperties = { display: 'flex', gap: 12, marginTop: 20, flexWrap: 'wrap' };
@@ -287,6 +354,7 @@ export default function CareersPage() {
           <h1 id="careers-hero-title" style={heroTitle}>
             Start your career in <span style={{ color: 'var(--accent)' }}>Space Science &amp; Technology</span>
           </h1>
+
           <p style={heroSub}>India’s first research-native Space edtech startup</p>
 
           <div style={heroBtns}>
