@@ -18,21 +18,21 @@ const internships: Role[] = [
     slug: 'graphic-designer-intern',
     href: '/graphic-designer-intern',
     blurb: 'Design educational visuals for rockets, space, and astrophysics.',
-    meta: 'Remote • ~10 hrs/week • Unpaid (certified)',
+    meta: 'Remote • ~2 hrs/day • Unpaid (certified)',
   },
   {
     title: 'Research Projects Developer Intern',
     slug: 'research-projects-developer-intern',
     href: '/research-projects-developer-intern',
     blurb: 'Build 4-week, code-backed workshop projects with milestones & rubrics.',
-    meta: 'Remote • ~10 hrs/week • Unpaid (certified)',
+    meta: 'Remote • ~2–3 hrs/day • Unpaid (certified)',
   },
   {
     title: 'Research Engineer Intern',
     slug: 'research-engineer-intern',
     href: '/research-engineer-intern',
     blurb: 'Own and ship a research-grade repo with CI, docs, and tests.',
-    meta: 'Remote • ~10 hrs/week • Unpaid (certified)',
+    meta: 'Remote • ~3-4 hrs/day • Unpaid (certified)',
   },
 ];
 
@@ -43,7 +43,7 @@ const jobs: Role[] = [
     href: '/business-operations-associate',
     blurb:
       'Help run cadence, trackers, hiring support, docs & follow-ups across Ops.',
-    meta: 'Remote • ~2–3 hrs/day • Unpaid (certified)',
+    meta: 'Remote • ~3-4 hrs/day • Unpaid (certified)',
   },
 ];
 
