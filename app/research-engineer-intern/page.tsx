@@ -142,9 +142,11 @@ export default function ResearchEngineerInternApply() {
 
             <h2 style={h2Next}><strong>What You’ll Gain</strong></h2>
             <ul style={{ listStyleType: 'disc', paddingLeft: '1.25rem', marginTop: 0 }}>
-              <li>Maintainer credit on a public research-grade repo (for open-source) or shipped proprietary project artifacts.</li>
-              <li>Certificate of Internship (unique ID) and performance-based Letter of Recommendation.</li>
-              <li>Option to mint a DOI on release (open-source); priority for future paid roles/contract work.</li>
+              <li>A certificate of internship from RocketiQ upon successful completion.</li>
+              <li>A Letter of Recommendation (LOR) based on performance.</li>
+              <li>Opportunity to fast-track into the RocketiQ Research Fellowship for free (subject to performance and qualifications).</li>
+              <li><li>Maintainer credit on a public research-grade repo (for open-source) or shipped proprietary project artifacts.</li>
+              <li>Mentorship + structured feedback; priority for future paid roles/contract work.</li>
             </ul>
 
             <h2 style={h2Next}><strong>Role Logistics</strong></h2>
