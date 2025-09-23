@@ -284,4 +284,66 @@ export default function BusinessOpsManagerApply() {
 
                 {/* Motivation (required) */}
                 <div>
-                  <div
+                  <div style={label}>Why do you want to join RocketiQ for this role?</div>
+                  <textarea
+                    name="q1"
+                    rows={5}
+                    required
+                    placeholder="In 4–6 sentences, share your motivation, the strengths you’ll bring, and what you’d aim to deliver in your first 60 days."
+                    style={{ resize: 'vertical' }}
+                  />
+                </div>
+
+                {/* Files (required) */}
+                <div>
+                  <div style={label}>Résumé / CV (PDF, under 2 MB)</div>
+                  <input type="file" name="resume" accept="application/pdf" required />
+                </div>
+
+                <div>
+                  <div style={label}>Cover Letter (PDF, under 2 MB)</div>
+                  <input type="file" name="cover_letter" accept="application/pdf" required />
+                </div>
+
+                <div>
+                  <div style={label}>1-Page Project Summary (PDF, under 2 MB)</div>
+                  <input type="file" name="project_summary" accept="application/pdf" required />
+                </div>
+
+                {fileErr && (
+                  <div style={{ color: '#ff9898', fontSize: 12, marginTop: 6 }}>{fileErr}</div>
+                )}
+
+                {/* Consent */}
+                <label className="consent">
+                  <input type="checkbox" name="consent" required /> I consent to RocketiQ processing my data for recruiting.
+                </label>
+
+                {/* Turnstile inside the form */}
+                <Turnstile theme="light" />
+
+                <button
+                  type="submit"
+                  className={`btn-primary ${pending ? 'btn-disabled' : ''}`}
+                  disabled={pending}
+                >
+                  {pending ? 'Submitting…' : 'Submit Application'}
+                </button>
+
+                {msg && (
+                  <div style={{ fontSize: 14, color: msg.startsWith('Failed') ? '#ff9898' : '#7de5b3' }}>
+                    {msg}
+                  </div>
+                )}
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <p style={{ textAlign: 'center', color: '#9aa4b2', fontSize: 12, marginTop: 20 }}>
+          © {new Date().getFullYear()} RocketiQ Next-Gen Learning. All rights reserved.
+        </p>
+      </div>
+    </main>
+  );
+}
