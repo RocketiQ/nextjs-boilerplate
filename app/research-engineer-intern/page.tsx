@@ -145,7 +145,7 @@ export default function ResearchEngineerInternApply() {
               <li>A certificate of internship from RocketiQ upon successful completion.</li>
               <li>A Letter of Recommendation (LOR) based on performance.</li>
               <li>Opportunity to fast-track into the RocketiQ Research Fellowship for free (subject to performance and qualifications).</li>
-              <li><li>Maintainer credit on a public research-grade repo (for open-source) or shipped proprietary project artifacts.</li>
+              <li>Maintainer credit on a public research-grade repo (for open-source) or shipped proprietary project artifacts.</li>
               <li>Mentorship + structured feedback; priority for future paid roles/contract work.</li>
             </ul>
 
