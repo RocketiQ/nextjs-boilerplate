@@ -41,7 +41,8 @@ const jobs: Role[] = [
     title: 'Business Operations Associate',
     slug: 'business-operations-associate',
     href: '/business-operations-associate',
-    blurb: 'Help run cadence, trackers, hiring support, docs & follow-ups across Ops.',
+    blurb:
+      'Help run cadence, trackers, hiring support, docs & follow-ups across Ops.',
     meta: 'Remote • ~2–3 hrs/day • Unpaid (certified)',
   },
 ];
@@ -49,25 +50,41 @@ const jobs: Role[] = [
 export default function CareersPage() {
   const bgCanvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // --- Background Animation: “Living neural network” with purple curved links (hover-reactive) ---
+  // ---- Background Animation (purple hover-reactive curves; no custom cursor) ----
   useEffect(() => {
     const canvas = bgCanvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const maybe = canvas.getContext('2d');
+    if (!maybe) return;
+    // From here on, ctx is guaranteed non-null
+    const ctx: CanvasRenderingContext2D = maybe;
 
-    let width = 0, height = 0;
+    let width = 0;
+    let height = 0;
     let raf = 0;
-    let mouseX = -9999, mouseY = -9999; // off-screen init
+
+    // Off-screen mouse to start
+    let mouseX = -1e6;
+    let mouseY = -1e6;
+
     const nodeSpacing = 60;
     const interactionRadius = 150;
-    const nodes: { x: number; y: number; energy: number; radius: number }[] = [];
-    const links: { start: any; end: any; life: number }[] = [];
+
+    interface Node {
+      x: number;
+      y: number;
+      energy: number;
+      radius: number;
+    }
+
+    const nodes: Node[] = [];
+    const links: Link[] = [];
 
     const resize = () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
+
       nodes.length = 0;
       for (let y = 0; y < height; y += nodeSpacing) {
         for (let x = 0; x < width; x += nodeSpacing) {
@@ -87,10 +104,10 @@ export default function CareersPage() {
     };
 
     class Link {
-      start: (typeof nodes)[number];
-      end: (typeof nodes)[number];
+      start: Node;
+      end: Node;
       life: number;
-      constructor(start: (typeof nodes)[number], end: (typeof nodes)[number]) {
+      constructor(start: Node, end: Node) {
         this.start = start;
         this.end = end;
         this.life = 1;
@@ -99,9 +116,9 @@ export default function CareersPage() {
         this.life -= 0.03;
       }
       draw() {
+        // Quadratic curve with a gentle bend
         ctx.beginPath();
         ctx.moveTo(this.start.x, this.start.y);
-        // Quadratic curve with a gentle bend
         const ctrlX =
           (this.start.x + this.end.x) / 2 + (this.end.y - this.start.y) * 0.2;
         const ctrlY =
@@ -129,7 +146,7 @@ export default function CareersPage() {
         ctx.fill();
       }
 
-      // probabilistic purple links between currently "energized" nodes
+      // probabilistic purple links between energized nodes
       if (Math.random() < 0.2) {
         const active = nodes.filter((n) => n.energy > 0.5);
         if (active.length > 1) {
@@ -303,7 +320,11 @@ export default function CareersPage() {
           </h2>
           <div className="grid-3" style={grid}>
             {internships.map((r) => (
-              <article key={r.slug} className="card-dk lift-card" style={cardInner}>
+              <article
+                key={r.slug}
+                className="card-dk lift-card"
+                style={cardInner}
+              >
                 <h3
                   style={{
                     margin: 0,
@@ -315,7 +336,9 @@ export default function CareersPage() {
                   {r.title}
                 </h3>
                 {r.meta && <div style={metaStyle}>{r.meta}</div>}
-                <p style={{ margin: '6px 0 12px', fontSize: 16 }}>{r.blurb}</p>
+                <p style={{ margin: '6px 0 12px', fontSize: 16 }}>
+                  {r.blurb}
+                </p>
                 <div style={{ marginTop: 'auto' }}>
                   <Link
                     href={r.href}
@@ -338,7 +361,11 @@ export default function CareersPage() {
           </h2>
           <div className="grid-3" style={grid}>
             {jobs.map((r) => (
-              <article key={r.slug} className="card-dk lift-card" style={cardInner}>
+              <article
+                key={r.slug}
+                className="card-dk lift-card"
+                style={cardInner}
+              >
                 <h3
                   style={{
                     margin: 0,
@@ -350,7 +377,9 @@ export default function CareersPage() {
                   {r.title}
                 </h3>
                 {r.meta && <div style={metaStyle}>{r.meta}</div>}
-                <p style={{ margin: '6px 0 12px', fontSize: 16 }}>{r.blurb}</p>
+                <p style={{ margin: '6px 0 12px', fontSize: 16 }}>
+                  {r.blurb}
+                </p>
                 <div style={{ marginTop: 'auto' }}>
                   <Link
                     href={r.href}
