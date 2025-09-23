@@ -7,7 +7,7 @@ type Role = {
   slug: string;
   title: string;
   blurb: string;
-  meta: string; // quick status line
+  meta: string; // short status line
 };
 
 const ROLES: Role[] = [
@@ -60,14 +60,19 @@ export default function CareersHome() {
 
         <div className="roles-grid">
           {ROLES.map((r) => (
-            <article key={r.slug} className="card-thruster">
+            <article key={r.slug} className="card-orbit">
+              {/* orbital rings */}
+              <span className="orbit orbit-a" aria-hidden="true" />
+              <span className="orbit orbit-b" aria-hidden="true" />
+              <span className="satellite" aria-hidden="true" />
+
               <div className="card-body">
                 <div className="card-meta">{r.meta}</div>
                 <h2 className="card-title">{r.title}</h2>
                 <p className="card-blurb">{r.blurb}</p>
 
-                <Link href={r.slug} className="thrust-cta" aria-label={`Open ${r.title}`}>
-                  IGNITE
+                <Link href={r.slug} className="orbit-cta" aria-label={`Open ${r.title}`}>
+                  View role <span className="arrow">→</span>
                 </Link>
               </div>
             </article>
@@ -79,9 +84,8 @@ export default function CareersHome() {
         </p>
       </div>
 
-      {/* Thruster styling (scoped) */}
+      {/* ORBIT styling (scoped to this page) */}
       <style jsx global>{`
-        /* grid for role cards */
         .roles-grid {
           display: grid;
           gap: 20px;
@@ -89,19 +93,20 @@ export default function CareersHome() {
           align-items: stretch;
         }
 
-        /* THRUSTER CARD: gradient border + plume glow */
-        .card-thruster {
+        .card-orbit {
           position: relative;
           border-radius: 16px;
-          padding: 1px; /* gradient border thickness */
+          padding: 1px; /* thin gradient border */
           background: linear-gradient(
             135deg,
-            rgba(245, 181, 36, 0.9),
-            rgba(245, 181, 36, 0.25)
+            rgba(245, 181, 36, 0.85),
+            rgba(245, 181, 36, 0.22)
           );
-          transition: transform 0.25s ease, box-shadow 0.25s ease;
+          transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+          overflow: hidden;
         }
-        .card-thruster .card-body {
+        .card-orbit .card-body {
+          position: relative;
           background: var(--panel);
           border: 1px solid var(--panel-border);
           border-radius: 15px;
@@ -112,33 +117,54 @@ export default function CareersHome() {
           gap: 10px;
         }
 
-        /* Thruster plume (bottom glow) */
-        .card-thruster::after {
-          content: '';
+        /* ORBITAL RINGS (big faint circles peeking in) */
+        .card-orbit .orbit {
           position: absolute;
-          left: 50%;
-          bottom: -14px;
-          transform: translateX(-50%);
-          width: 140px;
-          height: 28px;
-          background: radial-gradient(
-            50% 70% at 50% 0%,
-            rgba(245, 181, 36, 0.55) 0%,
-            rgba(245, 181, 36, 0.0) 70%
-          );
-          filter: blur(8px);
-          opacity: 0.45;
           pointer-events: none;
-          transition: opacity 0.25s ease, transform 0.25s ease;
+          border-radius: 999px;
+          border: 1px solid rgba(245, 181, 36, 0.25);
+          filter: drop-shadow(0 0 8px rgba(245, 181, 36, 0.05));
+          transform: rotate(8deg);
+        }
+        /* top-right large ring */
+        .card-orbit .orbit-a {
+          width: 360px;
+          height: 360px;
+          top: -170px;
+          right: -120px;
+        }
+        /* bottom-left smaller ring */
+        .card-orbit .orbit-b {
+          width: 240px;
+          height: 240px;
+          bottom: -120px;
+          left: -100px;
+          transform: rotate(-6deg);
+          border-color: rgba(245, 181, 36, 0.18);
         }
 
-        .card-thruster:hover {
+        /* tiny satellite dot riding an orbit */
+        .card-orbit .satellite {
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          right: 38px;
+          top: 34px;
+          background: var(--accent);
+          border-radius: 50%;
+          box-shadow:
+            0 0 0 2px rgba(245, 181, 36, 0.25),
+            0 0 14px rgba(245, 181, 36, 0.35);
+        }
+
+        .card-orbit:hover {
           transform: translateY(-2px);
           box-shadow: 0 10px 28px rgba(245, 181, 36, 0.08);
-        }
-        .card-thruster:hover::after {
-          opacity: 0.75;
-          transform: translateX(-50%) scale(1.05);
+          background: linear-gradient(
+            135deg,
+            rgba(245, 181, 36, 0.95),
+            rgba(245, 181, 36, 0.28)
+          );
         }
 
         .card-title {
@@ -155,30 +181,29 @@ export default function CareersHome() {
         }
         .card-blurb {
           color: #cbd4e6;
-          margin: 2px 0 8px;
+          margin: 2px 0 10px;
           line-height: 1.55;
         }
 
-        /* CTA */
-        .thrust-cta {
+        .orbit-cta {
           align-self: flex-start;
-          background: var(--accent);
-          color: var(--bg);
-          border: 0;
+          background: transparent;
+          border: 1px solid rgba(245, 181, 36, 0.45);
+          color: var(--text);
           border-radius: 10px;
           padding: 10px 14px;
           font-weight: 800;
           letter-spacing: 0.3px;
           text-decoration: none;
-          transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+          transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .thrust-cta:hover {
-          filter: brightness(1.06);
+        .orbit-cta:hover {
+          border-color: rgba(245, 181, 36, 0.9);
           box-shadow: 0 0 20px rgba(245, 181, 36, 0.12);
           transform: translateY(-1px);
         }
-        .thrust-cta:active {
-          transform: translateY(0);
+        .orbit-cta .arrow {
+          margin-left: 6px;
         }
       `}</style>
     </main>
