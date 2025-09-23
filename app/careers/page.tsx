@@ -18,7 +18,7 @@ const internships: Role[] = [
     slug: 'graphic-designer-intern',
     href: '/graphic-designer-intern',
     blurb: 'Design educational visuals for rockets, space, and astrophysics.',
-    meta: 'Remote • ~2 hrs/day • Certified',
+    meta: '~2 hrs/day • Remote • Certified',
   },
   {
     title: 'Research Projects Developer Intern',
