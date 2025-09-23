@@ -54,7 +54,6 @@ export default function CareersPage() {
     }
   }
 
-  // Reusable styles
   const grid = useMemo<React.CSSProperties>(
     () => ({
       display: 'grid',
@@ -73,7 +72,7 @@ export default function CareersPage() {
 
   const metaStyle: React.CSSProperties = {
     color: 'var(--muted)',
-    fontSize: 15, // +2px
+    fontSize: 15,
   };
 
   const heroWrap: React.CSSProperties = {
@@ -84,7 +83,7 @@ export default function CareersPage() {
   const heroTitle: React.CSSProperties = {
     margin: 0,
     fontWeight: 900,
-    fontSize: 'clamp(30px, 5vw, 60px)', // slightly larger
+    fontSize: 'clamp(30px, 5vw, 60px)',
     lineHeight: 1.16,
     letterSpacing: '-0.02em',
   };
@@ -92,25 +91,25 @@ export default function CareersPage() {
   const heroSub: React.CSSProperties = {
     color: 'var(--muted)',
     marginTop: 14,
-    fontSize: 18, // +2px
+    fontSize: 18,
   };
 
   const heroBtns: React.CSSProperties = {
     display: 'flex',
     gap: 12,
-    marginTop: 20,
+    marginTop: 20, // mobile/default
     flexWrap: 'wrap',
   };
 
   const hotLine: React.CSSProperties = {
-    marginTop: 18,
-    fontSize: 16, // +2px
+    marginTop: 18, // mobile/default
+    fontSize: 16,
     color: 'var(--muted)',
   };
 
   const sectionH2: React.CSSProperties = {
     fontWeight: 900,
-    fontSize: 'clamp(22px, 2.2vw, 32px)', // much bigger
+    fontSize: 'clamp(22px, 2.2vw, 32px)',
     marginTop: 44,
     marginBottom: 16,
     letterSpacing: '-0.01em',
@@ -140,10 +139,11 @@ export default function CareersPage() {
             </span>
           </h1>
 
-          <p style={heroSub}>India’s first research-native Space edtech startup</p>
+          <p className="hero-sub" style={heroSub}>
+            India’s first research-native Space edtech startup
+          </p>
 
-          <div style={heroBtns}>
-            {/* same physical size for both buttons */}
+          <div className="hero-btns" style={heroBtns}>
             <a
               href="#internships"
               className="btn-primary btn-size btn-glow"
@@ -160,7 +160,7 @@ export default function CareersPage() {
             </a>
           </div>
 
-          <div style={hotLine}>
+          <div className="hot-line" style={hotLine}>
             <strong style={{ color: 'var(--text)' }}>Hot vacancies:</strong>{' '}
             <Link href="/graphic-designer-intern">Graphic Designer Intern</Link>,{' '}
             <Link href="/business-operations-associate">
@@ -185,7 +185,7 @@ export default function CareersPage() {
                 <h3
                   style={{
                     margin: 0,
-                    fontSize: 20, // +2px
+                    fontSize: 20,
                     fontWeight: 800,
                     color: 'var(--accent)',
                   }}
@@ -226,7 +226,7 @@ export default function CareersPage() {
                 <h3
                   style={{
                     margin: 0,
-                    fontSize: 20, // +2px
+                    fontSize: 20,
                     fontWeight: 800,
                     color: 'var(--accent)',
                   }}
@@ -270,8 +270,26 @@ export default function CareersPage() {
         html {
           scroll-behavior: smooth;
         }
+
+        /* --- Desktop-only spacing tweaks --- */
+        @media (min-width: 1024px) {
+          /* logo sits a bit lower from the top, and large gap below it */
+          .careers-page .logo-bar {
+            margin-top: 18px;
+            margin-bottom: 120px; /* massive space to hero */
+          }
+          /* ~4 lines of space (≈ 96px) between subheading and buttons */
+          .careers-page .hero-btns {
+            margin-top: 96px !important;
+          }
+          /* same 4-line space from buttons to Hot vacancies */
+          .careers-page .hot-line {
+            margin-top: 96px !important;
+          }
+        }
+
         .careers-page .btn-size {
-          width: 160px; /* exact same rectangle for both hero buttons */
+          width: 160px;
           text-align: center;
           padding: 12px 16px;
           border-radius: 12px;
@@ -300,13 +318,11 @@ export default function CareersPage() {
         }
         .careers-page .lift-card:hover {
           transform: translateY(-6px) scale(1.015);
-          /* border glow + soft elevation */
           box-shadow:
             0 0 0 1px rgba(255, 200, 60, 0.35) inset,
             0 16px 36px rgba(0, 0, 0, 0.35),
             0 0 40px rgba(255, 200, 60, 0.12);
         }
-        /* Force 3-up on wider screens */
         @media (min-width: 1024px) {
           .careers-page .grid-3 {
             grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
