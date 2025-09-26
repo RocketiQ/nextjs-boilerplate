@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Turnstile from '../components/Turnstile';
 
-export default function BusinessOpsAssociateApply() {
+export default function BusinessOpsInternApply() {
   const [pending, setPending] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
   const [fileErr, setFileErr] = useState<string | null>(null);
@@ -68,7 +68,7 @@ export default function BusinessOpsAssociateApply() {
       setMsg('Application submitted. Thank you!');
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'application_submitted', {
-          job_slug: 'business-operations-associate',
+          job_slug: 'business-operations-intern',
         });
       }
       formEl.reset();
