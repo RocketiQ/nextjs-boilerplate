@@ -24,7 +24,8 @@ const internships: Role[] = [
     title: 'Business Operations Intern',
     slug: 'business-operations-intern',
     href: '/business-operations-intern',
-    blurb:'Support day-to-day ops across Creative, Web, Hiring/HR, Events & Internal Systems; keep trackers tidy and drive follow-ups.',
+    blurb:
+      'Support day-to-day ops across Creative, Web, Hiring/HR, Events & Internal Systems; keep trackers tidy and drive follow-ups.',
     meta: 'Remote ~2–3 hrs/day • Certified',
   },
   {
@@ -40,33 +41,6 @@ const internships: Role[] = [
     href: '/research-engineer-intern',
     blurb: 'Own and ship a research-grade repo with CI, docs, and tests.',
     meta: 'Remote ~3-4 hrs/day • Certified',
-  },
-];
-
-const jobs: Role[] = [
-  {
-    title: 'Business Operations Associate',
-    slug: 'business-operations-associate',
-    href: '/business-operations-associate',
-    blurb:
-      'Help run cadence, trackers, hiring support, docs & follow-ups across Ops.',
-    meta: 'Remote ~3 hrs/day • Certified',
-  },
-  {
-  title: 'Business Operations Manager',
-  slug: 'business-operations-manager',
-  href: '/business-operations-manager',
-  blurb:
-    'Own day-to-day ops across Creative, Web, Hiring/HR, Events & Internal Systems; run cadences, enforce quality, keep teams in sync.',
-  meta: 'Remote ~3-4 hrs/day • Certified',
-  },
-  {
-  title: 'Principal Research Program Manager',
-  slug: 'principal-research-program-manager',
-  href: '/principal-research-program-manager',
-  blurb:
-    'Lead the Research & Content team; set technical roadmap; author/oversee projects & solvers; enforce CI/reproducibility; deliver workshops/fellowships.',
-  meta: 'Remote ~3 hrs/day • Certified',
   },
 ];
 
@@ -213,11 +187,11 @@ export default function CareersPage() {
             lastSpawn = now;
           } else {
             // even if we didn't find a partner, don't hammer spawn attempts
-            lastSpawn = now - (SPAWN_INTERVAL_MS * 0.5);
+            lastSpawn = now - SPAWN_INTERVAL_MS * 0.5;
           }
         } else {
           // not enough eligible nodes; back off a bit
-          lastSpawn = now - (SPAWN_INTERVAL_MS * 0.4);
+          lastSpawn = now - SPAWN_INTERVAL_MS * 0.4;
         }
       }
 
@@ -300,15 +274,13 @@ export default function CareersPage() {
             <a href="#internships" className="btn-primary btn-size btn-glow" style={{ textDecoration: 'none' }}>
               Internships
             </a>
-            <a href="#jobs" className="btn-ghost btn-size btn-glow" style={{ textDecoration: 'none' }}>
-              Jobs
-            </a>
+            {/* Jobs button removed */}
           </div>
 
           <div style={hotLine}>
             <strong style={{ color: 'var(--text)' }}>Hot vacancies:</strong>{' '}
             <Link href="/graphic-designer-intern">Graphic Designer Intern</Link>,{' '}
-           <Link href="/business-operations-intern">Business Operations Intern</Link>,{' '}
+            <Link href="/business-operations-intern">Business Operations Intern</Link>,{' '}
             <Link href="/research-engineer-intern">Research Engineer Intern</Link>
           </div>
         </section>
@@ -337,29 +309,7 @@ export default function CareersPage() {
           </div>
         </section>
 
-        {/* JOBS */}
-        <section id="jobs" aria-labelledby="jobs-title">
-          <h2 id="jobs-title" style={sectionH2}>Jobs</h2>
-          <div className="grid-3" style={grid}>
-            {jobs.map((r) => (
-              <article key={r.slug} className="card-dk lift-card" style={cardInner}>
-                <h3 style={{ margin: 0, fontSize: 20, fontWeight: 800, color: 'var(--accent)' }}>{r.title}</h3>
-                {r.meta && <div style={metaStyle}>{r.meta}</div>}
-                <p style={{ margin: '6px 0 12px', fontSize: 16 }}>{r.blurb}</p>
-                <div style={{ marginTop: 'auto' }}>
-                  <Link
-                    href={r.href}
-                    onClick={() => trackClick(r.slug)}
-                    className="btn-primary btn-glow"
-                    style={{ textDecoration: 'none', display: 'inline-block' }}
-                  >
-                    View role &amp; apply
-                  </Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
+        {/* Jobs section removed */}
 
         <p style={{ textAlign: 'center', color: '#9aa4b2', fontSize: 12, marginTop: 30 }}>
           © {new Date().getFullYear()} RocketiQ Next-Gen Learning. All rights reserved.
