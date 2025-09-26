@@ -21,6 +21,13 @@ const internships: Role[] = [
     meta: 'Remote ~2 hrs/day • Certified',
   },
   {
+    title: 'Business Operations Intern',
+    slug: 'business-operations-intern',
+    href: '/business-operations-intern',
+    blurb:'Support day-to-day ops across Creative, Web, Hiring/HR, Events & Internal Systems; keep trackers tidy and drive follow-ups.',
+    meta: 'Remote ~2–3 hrs/day • Certified',
+  },
+  {
     title: 'Research Projects Developer Intern',
     slug: 'research-projects-developer-intern',
     href: '/research-projects-developer-intern',
@@ -301,7 +308,7 @@ export default function CareersPage() {
           <div style={hotLine}>
             <strong style={{ color: 'var(--text)' }}>Hot vacancies:</strong>{' '}
             <Link href="/graphic-designer-intern">Graphic Designer Intern</Link>,{' '}
-            <Link href="/business-operations-associate">Business Operations Associate</Link>,{' '}
+           <Link href="/business-operations-intern">Business Operations Intern</Link>,{' '}
             <Link href="/research-engineer-intern">Research Engineer Intern</Link>
           </div>
         </section>
